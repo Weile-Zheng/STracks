@@ -1,5 +1,5 @@
 const { playlist_track_all } = require('./NeteaseCloudMusicApi')
-  
+
 const fs = require('fs');
 
 let name
@@ -10,16 +10,15 @@ async function test() {
       id: '2065854146'
     })
     const song = result.body['songs']
-    name = JSON.stringify(song)
+    const songDict = {}
+    song.forEach(obj => {
+      songDict[obj.name] = obj.ar[0].name
+    })
 
-    fs.writeFile("./songs.json", name, err=>{
-      if(err){
-        console.log("Error writing file" ,err)
-      } else {
-        console.log('JSON data is written to the file successfully')
-      }
-     })
-     
+    fs.writeFile("./songs.txt", Object.entries(songDict).map(([key, value]) => `${key}: ${value}`).join('\n'), err => {
+      if (err) throw err
+      console.log("Output saved to file")
+    })
   } catch (error) {
     console.log(error)
   }
