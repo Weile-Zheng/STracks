@@ -9,6 +9,7 @@ NodeJS.
 
 Goals:
 - Successfully migrate all tracks, with unfound tracks notified to end user
+- Wrote own Spotify API wrapper. 
 - UI Interface for user login and track management. 
 - Ability to deselect certain tracks to migrate 
 - Inclusion of native netease music interface instead of relying on playlist link/id
