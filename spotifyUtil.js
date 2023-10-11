@@ -55,6 +55,40 @@ async function getAccessToken(client_id, client_secret) {
     return returndata;
 }
 
+/**
+ * Search for a track on spotify. 
+ * @param {string} track 
+ * @param {string} access_token 
+ * @param {number} limit number of relevent result to be returned from search query. 
+ * @returns {Object} Parsed JSON object from spotify with relevent track information.
+ */
+async function searchTrack(track, access_token, limit) {
+
+}
+
+/**
+ * Create a playlist for a user
+ * @param {string} name 
+ * @param {string} access_token 
+ * @param {string} user_id 
+ * @returns {boolean} true if playlist was created successfully, false otherwise.
+ */
+
+async function createPlaylist(name, access_token, user_id) {
+
+}
+
+/**
+ * Insert a track into a playlist given playlit id and track id.
+ * @param {string} playlist_id 
+ * @param {string} track_id 
+ * @param {string} access_token 
+ * @returns {boolean} true if track was inserted successfully, false otherwise.
+ */
+async function insertPlaylistTrack(playlist_id, track_id, access_token) {
+}
+
+
 async function main() {
     const client_id = await getKeys('keys.json', 'client_id');
     console.log(client_id);
