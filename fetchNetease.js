@@ -1,8 +1,6 @@
 const { playlist_track_all } = require('./NeteaseCloudMusicApi')
 const fs = require('fs');
 
-let name
-
 async function fetchPlaylistTracks() {
   try {
     const result = await playlist_track_all({
