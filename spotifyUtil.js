@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+
 /**
  * Gets the value of a key from a JSON file.
  * If no keys, returns the entire parsed JSON object.
@@ -33,10 +34,9 @@ async function getKeys(fileName, key) {
  * Get the access token from spotify API providing developer client keys. 
  * @param {string} client_id 
  * @param {string} client_secret 
- * @returns {Object} JSON object from spotify with access_token, token_type, expires_in.    
+ * @returns {string} access_token. Edit return to return full JSON object 
  */
 async function getAccessToken(client_id, client_secret) {
-
     const url = 'https://accounts.spotify.com/api/token';
     const data = new URLSearchParams();
     data.append('grant_type', 'client_credentials');
@@ -52,29 +52,67 @@ async function getAccessToken(client_id, client_secret) {
     });
 
     const returndata = await response.json();
-    return returndata;
+    return returndata.access_token;
 }
 
 /**
  * Search for a track on spotify. 
- * @param {string} track 
+ * @param {string} trackname
  * @param {string} access_token 
  * @param {number} limit number of relevent result to be returned from search query. 
- * @returns {Object} Parsed JSON object from spotify with relevent track information.
+ * @returns {object} List of track names returned from search with artist(s)
+ * [ 
+ *  {name: '', artists: ['', '' ], id: '' }, 
+ *  {name: '', artists: [''], id: '' } 
+ *  ]
  */
-async function searchTrack(track, access_token, limit) {
-    
+async function searchTrack(trackName, access_token, limit, artist_list) {
+    const artists = artist_list.join(", ");
+    console.log(artists);
+    const url = `https://api.spotify.com/v1/search?q=track:${trackName}%20artist:${artists}&type=track&limit=${limit}`;
+
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${access_token}`
+        }
+    });
+    const data = await response.json();
+    return data.tracks.items.map(item => ({
+        name: item.name,
+        artists: item.artists.map(artist => artist.name),
+        id: item.id
+    }));
+
 }
+
 
 /**
  * Create a playlist for a user
  * @param {string} name 
  * @param {string} access_token 
  * @param {string} user_id 
+ * @param {string} description optional parameter for playlist description
+ * @param {boolean} isPublic publicity of new spotify playlist. Default private
  * @returns {boolean} true if playlist was created successfully, false otherwise.
  */
+async function createPlaylist
+    (name, access_token, user_id, description = "Spotify Imported Playlist", is_public = false) {
 
-async function createPlaylist(name, access_token, user_id) {
+    const url = `https://api.spotify.com/v1/users/${user_id}/playlists`;
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${access_token}`
+        },
+        data: `{
+            "name": "${name}",
+            "description": "${description}",
+            "public": "${is_public}"
+        }`
+
+    })
+    return response.json();
 
 }
 
@@ -89,14 +127,28 @@ async function insertPlaylistTrack(playlist_id, track_id, access_token) {
 }
 
 
+async function movePlaylist() {
+
+}
+
+
 async function main() {
+    console.log("Getting Cliend ID");
     const client_id = await getKeys('keys.json', 'client_id');
     console.log(client_id);
+    console.log("Getting Cliend_secret");
     const client_secret = await getKeys('keys.json', 'client_secret');
     console.log(client_secret);
-    const returndata = await getAccessToken(client_id, client_secret);
-    console.log(returndata);
-    console.log(typeof (returndata));
+    console.log("Getting Access Token");
+    const access_token = await getAccessToken(client_id, client_secret);
+    console.log(access_token);
+    console.log("Getting Tracks")
+    const returnedTrack = await searchTrack("Hello?", access_token, 3, ["adele"]);
+    console.log(returnedTrack);
+    console.log("Creating Playlist")
+    const create = await createPlaylist("Test", access_token, "31udsopvquncrlokyfc3jp2yx5kq")
+    console.log(create)
+
 }
 
 main();
