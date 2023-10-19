@@ -16,6 +16,11 @@ if (!code) {
     //console.log(create)
 }
 
+/**
+ * Fetch user spotify profile. 
+ * @param {string} token 
+ * @returns user profile in JSON 
+ */
 async function fetchProfile(token) {
     const result = await fetch("https://api.spotify.com/v1/me", {
         method: "GET", headers: { Authorization: `Bearer ${token}` }
@@ -24,6 +29,10 @@ async function fetchProfile(token) {
     return await result.json();
 }
 
+/**
+ * Populate web page with information on user profile.
+ * @param {object} profile json profile 
+ */
 function populateUI(profile) {
         document.getElementById("displayName").innerText = profile.display_name;
         if (profile.images[0]) {

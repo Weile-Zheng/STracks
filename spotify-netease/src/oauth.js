@@ -1,3 +1,7 @@
+/**
+ * Direct to Spotify authorization page with proper parameters 
+ * @param {string} clientId 
+ */
 export async function redirectToAuthCodeFlow(clientId) {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
@@ -17,6 +21,11 @@ export async function redirectToAuthCodeFlow(clientId) {
     document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
 }
 
+/**
+ * Generate code verifier for OAuth2
+ * @param {number} length 
+ * @returns code
+ */
 export function generateCodeVerifier(length) {
     let text = '';
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -27,6 +36,11 @@ export function generateCodeVerifier(length) {
     return text;
 }
 
+/**
+ * Generate code challenge for OAuth2 
+ * @param {string} codeVerifier 
+ * @returns code
+ */
 export async function generateCodeChallenge(codeVerifier) {
     const data = new TextEncoder().encode(codeVerifier);
     const digest = await window.crypto.subtle.digest('SHA-256', data);
@@ -36,6 +50,13 @@ export async function generateCodeChallenge(codeVerifier) {
         .replace(/=+$/, '');
 }
 
+/**
+ * Get access token with clientID and authen code 
+ * @param {string} clientId 
+ * @param {string} code 
+ * @returns access token string
+ * Note that this is a different method than clientID and client secret. 
+ */
 export async function getAccessToken(clientId, code) {
     const verifier = localStorage.getItem("verifier");
 
