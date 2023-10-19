@@ -1,4 +1,4 @@
-const { playlist_track_all } = require('./NeteaseCloudMusicApi')
+const playlist_track_all = require('./NeteaseCloudMusicApi')
 const fs = require('fs');
 
 /**

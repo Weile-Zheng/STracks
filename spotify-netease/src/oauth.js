@@ -1,15 +1,3 @@
-const clientId = "4c9d395af6dd467ab054393b3b189898"; // Replace with your client ID
-const params = new URLSearchParams(window.location.search);
-const code = params.get("code");
-
-if (!code) {
-    redirectToAuthCodeFlow(clientId);
-} else {
-    const accessToken = await getAccessToken(clientId, code);
-    const profile = await fetchProfile(accessToken);
-    populateUI(profile);
-}
-
 export async function redirectToAuthCodeFlow(clientId) {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
@@ -23,10 +11,13 @@ export async function redirectToAuthCodeFlow(clientId) {
     params.append("scope", "user-read-private user-read-email");
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
-
+    // The document.location property is a built-in property of the document object in 
+    //the browser's JavaScript environment. It represents the current URL of the web page, 
+    //and can be used to navigate to a new URL by assigning a new value to it.
     document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
 }
-function generateCodeVerifier(length) {
+
+export function generateCodeVerifier(length) {
     let text = '';
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -36,7 +27,7 @@ function generateCodeVerifier(length) {
     return text;
 }
 
-async function generateCodeChallenge(codeVerifier) {
+export async function generateCodeChallenge(codeVerifier) {
     const data = new TextEncoder().encode(codeVerifier);
     const digest = await window.crypto.subtle.digest('SHA-256', data);
     return btoa(String.fromCharCode.apply(null, [...new Uint8Array(digest)]))
@@ -44,6 +35,7 @@ async function generateCodeChallenge(codeVerifier) {
         .replace(/\//g, '_')
         .replace(/=+$/, '');
 }
+
 export async function getAccessToken(clientId, code) {
     const verifier = localStorage.getItem("verifier");
 
@@ -61,29 +53,6 @@ export async function getAccessToken(clientId, code) {
     });
 
     const { access_token } = await result.json();
+    console.log(access_token)
     return access_token;
-}
-
-async function fetchProfile(token) {
-    const result = await fetch("https://api.spotify.com/v1/me", {
-        method: "GET", headers: { Authorization: `Bearer ${token}` }
-    });
-
-    return await result.json();
-}
-
-function populateUI(profile) {
-        document.getElementById("displayName").innerText = profile.display_name;
-        if (profile.images[0]) {
-            const profileImage = new Image(200, 200);
-            profileImage.src = profile.images[0].url;
-            document.getElementById("avatar").appendChild(profileImage);
-            document.getElementById("imgUrl").innerText = profile.images[0].url;
-        }
-        document.getElementById("id").innerText = profile.id;
-        document.getElementById("email").innerText = profile.email;
-        document.getElementById("uri").innerText = profile.uri;
-        document.getElementById("uri").setAttribute("href", profile.external_urls.spotify);
-        document.getElementById("url").innerText = profile.href;
-        document.getElementById("url").setAttribute("href", profile.href);
 }

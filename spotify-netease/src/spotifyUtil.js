@@ -1,14 +1,13 @@
 const fs = require('fs');
 
-
 /**
  * Gets the value of a key from a JSON file.
  * If no keys, returns the entire parsed JSON object.
  * @param {string} fileName - The name of the JSON file to read.
- * @param {string} [key] - The key to retrieve the value for.
+ * @param {string} key - The JSON file key to retrieve the value for.
  * @returns {Promise} A promise that resolves with the value of the key
  */
-async function getKeys(fileName, key) {
+export async function getKeys(fileName, key) {
     return new Promise((resolve, reject) => {
         fs.readFile(fileName, 'utf8', (err, jsonString) => {
             if (err) {
@@ -96,7 +95,7 @@ async function searchTrack(trackName, access_token, limit, artist_list) {
  * @param {boolean} isPublic publicity of new spotify playlist. Default private
  * @returns {boolean} true if playlist was created successfully, false otherwise.
  */
-async function createPlaylist
+export async function createPlaylist
     (name, access_token, user_id, description = "Spotify Imported Playlist", is_public = false) {
 
     const url = `https://api.spotify.com/v1/users/${user_id}/playlists`;
@@ -150,5 +149,3 @@ async function main() {
     console.log(create)
 
 }
-
-main();

@@ -16,3 +16,7 @@ Goals:
 - Package and bundled as a nodejs project runnable from local computers. 
 
 
+Questions:
+- How to host a website
+- Package management and project framework
+- How to manage user data and track network trafficks. 
