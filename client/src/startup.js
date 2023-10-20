@@ -4,7 +4,7 @@ import {
     generateCodeVerifier, generateCodeChallenge
 } from './oauth.js';
 
-import { createPlaylist } from './spotifyUtil.js';
+import { createPlaylist, searchTrack, fetchWebApi, find_all_matching_spotify_tracks, insertTracks } from './spotifyUtil.js';
 
 import { fetchPlaylistTracks } from './fetchNetease.js';
 
@@ -21,6 +21,8 @@ if (!code) {
     populateUI(profile);
     //add_create_playlist_button(access_token, profile.id);
     add_netease_playlist_button();
+    add_search_track_button(access_token);
+    add_migrate_button(access_token, profile.id);
 }
 
 /**
@@ -57,34 +59,6 @@ function populateUI(profile) {
 
 }
 
-function add_create_playlist_button(access_token, userID) {
-    const container = document.createElement("div");
-
-    const inputContainer = document.createElement("div");
-    const inputLabel = document.createElement("label");
-    inputLabel.innerText = "Netease PlaylistID: ";
-    const inputBox = document.createElement("input");
-    inputBox.type = "text";
-    inputContainer.appendChild(inputLabel);
-    inputContainer.appendChild(inputBox);
-
-    const createPlaylistButton = document.createElement("button");
-    createPlaylistButton.innerText = "Create Playlist";
-    createPlaylistButton.addEventListener("click", async () => {
-        const playlistName = inputBox.value;
-        if (playlistName === "") {
-            alert("Playlist name cannot be empty.");
-            return;
-        }
-
-        createPlaylist(playlistName, access_token, userID);
-        console.log("Complete");
-    });
-
-    container.appendChild(inputContainer);
-    container.appendChild(createPlaylistButton);
-    document.body.appendChild(container);
-}
 
 function add_netease_playlist_button() {
     const container = document.createElement("div");
@@ -107,6 +81,73 @@ function add_netease_playlist_button() {
         }
         const trackList = await fetchPlaylistTracks(playlistID);
         console.log(trackList)
+    });
+
+    container.appendChild(inputContainer);
+    container.appendChild(createPlaylistButton);
+    document.body.appendChild(container);
+}
+
+function add_search_track_button(access_token) {
+    const container = document.createElement("div");
+
+    const inputContainer = document.createElement("div");
+    const inputLabel = document.createElement("label");
+    inputLabel.innerText = "Track Name: ";
+    const inputBox = document.createElement("input");
+    inputBox.type = "text";
+    inputContainer.appendChild(inputLabel);
+    inputContainer.appendChild(inputBox);
+
+    const createPlaylistButton = document.createElement("button");
+    createPlaylistButton.innerText = "Search ";
+    createPlaylistButton.addEventListener("click", async () => {
+        const trackName = inputBox.value;
+        const artist_list = ['Lil Baby', 'Gunna']
+        if (trackName === "") {
+            alert("Song name cannot be empty.");
+            return;
+        }
+        const song = await searchTrack(trackName, access_token, artist_list);
+        console.log(song)
+    });
+
+    container.appendChild(inputContainer);
+    container.appendChild(createPlaylistButton);
+    document.body.appendChild(container);
+}
+function add_migrate_button(access_token, userID) {
+    console.log(`access one layer ${access_token}`)
+    const container = document.createElement("div");
+
+    const inputContainer = document.createElement("div");
+    const inputLabel = document.createElement("label");
+    inputLabel.innerText = "Netease PlaylistID: ";
+    const inputBox = document.createElement("input");
+    inputBox.type = "text";
+    inputContainer.appendChild(inputLabel);
+    inputContainer.appendChild(inputBox);
+
+    const createPlaylistButton = document.createElement("button");
+    createPlaylistButton.innerText = "Migrate Playlist";
+    createPlaylistButton.addEventListener("click", async () => {
+        const playlistID = inputBox.value;
+        if (playlistID === "") {
+            alert("Playlist ID cannot be empty.");
+            return;
+        }
+
+        const playlist = await createPlaylist("exported playlist", access_token, userID);
+        console.log("Forming tracklists")
+        const trackList = await fetchPlaylistTracks(playlistID);
+        console.log("Track list from netease formed. ");
+        console.log("Finding all matching spotified tracks");
+        const spotify_list = await find_all_matching_spotify_tracks(trackList, access_token);
+        console.log("Spotify track list found");
+        console.log(spotify_list);
+        console.log("Inserting all tracks");
+        await insertTracks(spotify_list, playlist.id, access_token);
+        console.log("Complete");
     });
 
     container.appendChild(inputContainer);

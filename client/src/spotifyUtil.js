@@ -2,6 +2,19 @@
  * Wrapper for working with spotify web api
  */
 
+
+
+export async function fetchWebApi(endpoint, request_method, access_token, body) {
+    const res = await fetch(`https://api.spotify.com/${endpoint}`, {
+        headers: {
+            Authorization: `Bearer ${access_token}`,
+        },
+        method: request_method,
+        body: JSON.stringify(body)
+    });
+    return await res.json();
+}
+
 /**
  * Gets the value of a key from a JSON file.
  * If no keys, returns the entire parsed JSON object.
@@ -61,6 +74,7 @@ async function getAccessToken(client_id, client_secret) {
  * Search for a track on spotify. 
  * @param {string} trackname
  * @param {string} access_token 
+ * @param {list} artist_list
  * @param {number} limit number of relevent result to be returned from search query. 
  * @returns {object} List of track names returned from search with artist(s)
  * [ 
@@ -68,10 +82,14 @@ async function getAccessToken(client_id, client_secret) {
  *  {name: '', artists: [''], id: '' } 
  *  ]
  */
-async function searchTrack(trackName, access_token, limit, artist_list) {
+
+export async function searchTrack(trackName, access_token, artist_list, limit = 3) {
+    console.log(artist_list);
     const artists = artist_list.join(", ");
-    console.log(artists);
-    const url = `https://api.spotify.com/v1/search?q=track:${trackName}%20artist:${artists}&type=track&limit=${limit}`;
+    const name = trackName;
+    const url = `https://api.spotify.com/v1/search?q=track:${name}%20artist:${artists}&type=track&limit=${limit}`;
+    console.log(url);
+    console.log(`access token: ${access_token}`)
 
     const response = await fetch(url, {
         method: 'GET',
@@ -79,16 +97,48 @@ async function searchTrack(trackName, access_token, limit, artist_list) {
             'Authorization': `Bearer ${access_token}`
         }
     });
+
     const data = await response.json();
-    return data.tracks.items.map(item => ({
-        name: item.name,
-        artists: item.artists.map(artist => artist.name),
-        id: item.id
-    }));
 
+    if (data && data.tracks && data.tracks.items) {
+        return data.tracks.items.map(item => ({
+            name: item.name,
+            artists: item.artists.map(artist => artist.name),
+            id: item.id
+        }));
+    } else {
+        return [];
+    }
 }
+/**
+ * Find matching spotifyID track for each
+ * @param {*} track_list list of dict(track name and artists lists),
+ * @param {*} access_token 
+ * @returns {list} list of spotify track ID that matched the find
+ */
+export async function find_all_matching_spotify_tracks(track_list, access_token) {
+    let spotify_list = [];
+    // For each of the track in track_list, search it with spotify, get the first result
+    // and return its spotify id to add into spotify list.
+    for (const track of track_list) {
 
+        const song = await searchTrack(track.name, access_token, track.artists);
+        console.log(song);
+        console.log(song.length)
+        if (song.length > 0) {
+            const firstTrack = song[0];
+            console.log(firstTrack);
+            spotify_list.push(firstTrack.id);
+            console.log(firstTrack.id);
+        }
+        else {
+            console.log(`Cannot find matching track: ${track.name} by artists: ${track.artists.join(",")}`);
+        }
 
+    }
+
+    return spotify_list;
+}
 /**
  * Create a playlist for a user
  * @param {string} name 
@@ -96,13 +146,13 @@ async function searchTrack(trackName, access_token, limit, artist_list) {
  * @param {string} user_id 
  * @param {string} description optional parameter for playlist description
  * @param {boolean} isPublic publicity of new spotify playlist. Default private
- * @returns {boolean} true if playlist was created successfully, false otherwise.
+ * @returns {} playlist creation response. Use .id to get the playlist id from the response.
  */
 export async function createPlaylist
     (name, access_token, user_id, description = "Netease Imported Playlist", is_public = false) {
 
     const url = `https://api.spotify.com/v1/users/${user_id}/playlists`;
-    const response = await fetch(url, {
+    const playlist = await fetch(url, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${access_token}`
@@ -114,31 +164,41 @@ export async function createPlaylist
         }`
 
     })
-    return response.json();
+
+
+    return playlist.json();
 }
 
 /**
- * Insert a track into a playlist given playlist id and track id.
- * @param {string} playlist_id 
- * @param {string} track_id 
- * @param {string} userID spotify userid
- * @param {string} access_token 
- * @returns {boolean} true if track was inserted successfully, false otherwise.
+ * Matching a netease track to spotify track
+ * Process
+ *  - 1. match tracks with same name and artists
+ *  - 2. match tracks with same name and incomplete artists(ex: only one of two artist)
+ *  - 3. match tracks with same name and different artist. first result returned
+ *  - 4. match tracks with different name. first result returned
+ * 
+ * @param {map} trackDetail track provided with full detail. {name: "", artist: [] }
+ * @returns track id of the matched spotify track
  */
-async function insert(playlist_id, track_id, userID, access_token) {
+async function matching(trackDetail) {
 
 }
-
 
 /**
  * Insert a list of tracks to a playlist given playlist id and track id
- * @param {*} trackList 
- * @param {*} track_id 
- * @param {*} userID 
- * @param {*} access_token 
+ * @param {*} trackList In spotify track id
+ * @param {*} playlist_id In spotify track id
  */
-async function insertTracks(trackList, track_id, userID, access_token) {
-
+export async function insertTracks(trackList, playlist_id, access_token) {
+    // uris=spotify:track:trackid
+    // uris is the parameter needed to add to a playlist
+    // Seperate each uris with a comma to add a list of tracks
+    const trackURIs = trackList.map(track => `spotify:track:${track}`);
+    await fetchWebApi(
+        `v1/playlists/${playlist_id}/tracks?uris=${trackURIs.join(',')}`,
+        'POST',
+        access_token
+    );
 }
 
 
