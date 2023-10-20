@@ -1,4 +1,8 @@
 /**
+ * Wrapper for working with spotify web api
+ */
+
+/**
  * Gets the value of a key from a JSON file.
  * If no keys, returns the entire parsed JSON object.
  * @param {string} fileName - The name of the JSON file to read.
@@ -51,6 +55,7 @@ async function getAccessToken(client_id, client_secret) {
     const returndata = await response.json();
     return returndata.access_token;
 }
+
 
 /**
  * Search for a track on spotify. 

@@ -3,7 +3,10 @@ import {
     redirectToAuthCodeFlow, getAccessToken,
     generateCodeVerifier, generateCodeChallenge
 } from './oauth.js';
+
 import { createPlaylist } from './spotifyUtil.js';
+
+import { fetchPlaylistTracks } from './fetchNetease.js';
 
 const clientId = "4c9d395af6dd467ab054393b3b189898";
 const params = new URLSearchParams(window.location.search); // Current url query string
@@ -102,8 +105,8 @@ function add_netease_playlist_button() {
             alert("Playlist name cannot be empty.");
             return;
         }
-        const trackDict = await fetchPlaylistTracks(playlistID);
-        logDictToConsole(trackDict);
+        const trackList = await fetchPlaylistTracks(playlistID);
+        console.log(trackList)
     });
 
     container.appendChild(inputContainer);

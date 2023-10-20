@@ -1,12 +1,29 @@
-const { playlist_track_all } = require('./NeteaseCloudMusicApi')
-const fs = require('fs');
 
 /**
- * Fetches all tracks from a netease playlist
+ * Fetches all tracks from a netease playlist. Requesting url. 
+ * @param {string} playlistID  netease playlist id
+ * @returns arrays of song name to artist name. 
+ */
+export async function fetchPlaylistTracks(playlistID) {
+
+  console.log("Sending Request")
+  const url = `http://localhost:3000/playlist/track/all?id=${playlistID}`
+  const result = await fetch(url);
+  const data = await result.json();
+
+  console.log("Returning songs")
+  return data.songs.map(song => ({
+    name: song.name,
+    artists: song.ar.map(artist => artist.name)
+  }))
+}
+
+/**
+ * Fetches all tracks from a netease playlist from local NodeJS
  * @param {string} playlistID  netease playlist id
  * @returns dictionary of song name to artist name. 
  */
-async function fetchPlaylistTracks(playlistID) {
+async function fetchPlaylistTracks_local(playlistID) {
   try {
     console.log("getting result")
     const result = await playlist_track_all({
@@ -39,18 +56,17 @@ function writeDictToFile(dict) {
 
 /**
  * Log a song dictionary to console
- * @param {*} dict 
+ * @param {*} list 
  */
-function logDictToConsole(dict){
-  console.log(Object.entries(dict).map(([key,value])=>`${key}: ${value}`).join('\n'))
+function logSongsToConsole(list) {
+  list.forEach(song => {
+    console.log(`${song.name}: ${song.artists.join(', ')}`);
+  });
 }
 
 async function main() {
   console.log("Fetching start");
   const dict = await fetchPlaylistTracks("7919811796");
   console.log("fetching end");
-  writeDictToFile(dict);
-  logDictToConsole(dict);
+  logSongsToConsole(dict);
 }
-
-main()
