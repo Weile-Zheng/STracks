@@ -26,6 +26,15 @@ Notes:
 Code in spotify-netease are clientside codes
 Code in NeteaseCloudMusicAPI and fetchNetease.js is serverside code
 
+A server is needed for continous hosting of fetchNetease.js code
+fetchNetease.js will need to be written to accept web requests and return data.
+Ideally rewrite fetchNetease.js to REST API to be robust and professional
+
+A web hostng service is needed for spotify-netease code. Which processes frontend request
+A frontend framework would be idea. Reactjs, vuejs
+Vite is used for development of these frontend codes as it is a fast local development server 
+
+
 Client-Side Code:
 Languages: The primary language used for client-side code is JavaScript. HTML and CSS are also essential for creating the structure and styling of web pages.
 Responsibilities: Client-side code is responsible for rendering web pages, creating interactive user interfaces, and responding to user interactions. It runs in the user's web browser.
