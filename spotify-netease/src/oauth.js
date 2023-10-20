@@ -1,4 +1,8 @@
 /**
+ * This file contains the functions for a proper oauth2 access grant with spotify. 
+ */
+
+/**
  * Direct to Spotify authorization page with proper parameters 
  * @param {string} clientId 
  */

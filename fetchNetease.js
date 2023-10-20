@@ -1,4 +1,4 @@
-const playlist_track_all = require('./NeteaseCloudMusicApi')
+const { playlist_track_all } = require('./NeteaseCloudMusicApi')
 const fs = require('fs');
 
 /**
@@ -8,9 +8,11 @@ const fs = require('fs');
  */
 async function fetchPlaylistTracks(playlistID) {
   try {
+    console.log("getting result")
     const result = await playlist_track_all({
       id: playlistID
     })
+    console.log("Getting songs")
     const song = result.body['songs']
     const songDict = {}
     song.forEach(obj => {
@@ -24,7 +26,7 @@ async function fetchPlaylistTracks(playlistID) {
 }
 
 /**
- * Write a dictionary to a file
+ * Write a song dictionary to a file
  * @param {*} playlist 
  */
 function writeDictToFile(dict) {
@@ -35,9 +37,20 @@ function writeDictToFile(dict) {
     })
 }
 
+/**
+ * Log a song dictionary to console
+ * @param {*} dict 
+ */
+function logDictToConsole(dict){
+  console.log(Object.entries(dict).map(([key,value])=>`${key}: ${value}`).join('\n'))
+}
+
 async function main() {
-  const dict = await fetchPlaylistTracks("2065854146")
-  writeDictToFile(dict)
+  console.log("Fetching start");
+  const dict = await fetchPlaylistTracks("7919811796");
+  console.log("fetching end");
+  writeDictToFile(dict);
+  logDictToConsole(dict);
 }
 
 main()

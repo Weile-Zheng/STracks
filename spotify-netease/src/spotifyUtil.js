@@ -113,17 +113,26 @@ export async function createPlaylist
 }
 
 /**
- * Insert a track into a playlist given playlit id and track id.
+ * Insert a track into a playlist given playlist id and track id.
  * @param {string} playlist_id 
  * @param {string} track_id 
+ * @param {string} userID spotify userid
  * @param {string} access_token 
  * @returns {boolean} true if track was inserted successfully, false otherwise.
  */
-async function insertPlaylistTrack(playlist_id, track_id, access_token) {
+async function insert(playlist_id, track_id, userID, access_token) {
+
 }
 
 
-async function movePlaylist() {
+/**
+ * Insert a list of tracks to a playlist given playlist id and track id
+ * @param {*} trackList 
+ * @param {*} track_id 
+ * @param {*} userID 
+ * @param {*} access_token 
+ */
+async function insertTracks(trackList, track_id, userID, access_token) {
 
 }
 
