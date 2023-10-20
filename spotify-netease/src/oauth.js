@@ -12,7 +12,7 @@ export async function redirectToAuthCodeFlow(clientId) {
     params.append("client_id", clientId);
     params.append("response_type", "code");
     params.append("redirect_uri", "http://localhost:5173/callback");
-    params.append("scope", "user-read-private user-read-email");
+    params.append("scope", "user-read-private user-read-email playlist-modify-private playlist-modify-public");
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
     // The document.location property is a built-in property of the document object in 
@@ -74,6 +74,5 @@ export async function getAccessToken(clientId, code) {
     });
 
     const { access_token } = await result.json();
-    console.log(access_token)
     return access_token;
 }

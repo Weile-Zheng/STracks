@@ -1,6 +1,7 @@
+
 import {redirectToAuthCodeFlow, getAccessToken, 
     generateCodeVerifier, generateCodeChallenge} from './oauth.js';
-
+import { createPlaylist } from './spotifyUtil.js';
 
 const clientId = "4c9d395af6dd467ab054393b3b189898";
 const params = new URLSearchParams(window.location.search); // Current url query string
@@ -10,10 +11,10 @@ if (!code) {
     redirectToAuthCodeFlow(clientId);
 } else {
     const access_token = await getAccessToken(clientId, code);
+    console.log(access_token);
     const profile = await fetchProfile(access_token);
     populateUI(profile);
-    //const create = await createPlaylist("Test", access_token, clientId)
-    //console.log(create)
+    add_create_playlist_button(access_token, profile.id);
 }
 
 /**
@@ -47,4 +48,15 @@ function populateUI(profile) {
         document.getElementById("uri").setAttribute("href", profile.external_urls.spotify);
         document.getElementById("url").innerText = profile.href;
         document.getElementById("url").setAttribute("href", profile.href);
+        
+}
+
+function add_create_playlist_button(access_token, userID){
+    const createPlaylistButton = document.createElement("button");
+        createPlaylistButton.innerText = "Create Playlist";
+        createPlaylistButton.addEventListener("click", async() =>{
+            createPlaylist("Test", access_token, userID);
+            console.log("Complete");
+        });
+        document.body.appendChild(createPlaylistButton);
 }

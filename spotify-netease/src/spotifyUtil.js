@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 /**
  * Gets the value of a key from a JSON file.
  * If no keys, returns the entire parsed JSON object.
@@ -96,7 +94,7 @@ async function searchTrack(trackName, access_token, limit, artist_list) {
  * @returns {boolean} true if playlist was created successfully, false otherwise.
  */
 export async function createPlaylist
-    (name, access_token, user_id, description = "Spotify Imported Playlist", is_public = false) {
+    (name, access_token, user_id, description = "Netease Imported Playlist", is_public = false) {
 
     const url = `https://api.spotify.com/v1/users/${user_id}/playlists`;
     const response = await fetch(url, {
@@ -104,7 +102,7 @@ export async function createPlaylist
         headers: {
             'Authorization': `Bearer ${access_token}`
         },
-        data: `{
+        body: `{
             "name": "${name}",
             "description": "${description}",
             "public": "${is_public}"
@@ -112,7 +110,6 @@ export async function createPlaylist
 
     })
     return response.json();
-
 }
 
 /**
