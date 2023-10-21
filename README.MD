@@ -7,6 +7,10 @@ NodeJS.
 
 [Netease API](https://binaryify.github.io/NeteaseCloudMusicApi/#/)
 
+Local Set up method:
+Mount Neatease Nodejs server: node app.js (neteaseapi folder)
+Mount live server locally using vite: npm run dev (src folder of client) 
+
 Upcoming Goal Oct 20- 23: 
 - Integrate user loggin from netease for easier playlist migration 
 - Develop basic frontend with VueJS
@@ -17,15 +21,17 @@ Week 23 - 28:
 - Integrate database. 
 - Research possible server and web hosting platforms. 
 
+Ideas: 
+How to improve matching? For songs that artist are registered with slightly different name? 
+slightly different song name? etc 
+Use word matching api? 
+
 
 Goals:
 - Successfully migrate all tracks, with unfound tracks notified to end user
-- Wrote own Spotify API wrapper. 
 - UI Interface for user login and track management. 
 - Ability to deselect certain tracks to migrate 
 - Inclusion of native netease music interface instead of relying on playlist link/id
-- Package and bundled as a nodejs project runnable from local computers. 
-
 
 Questions:
 - How to host a website
