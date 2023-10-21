@@ -7,6 +7,17 @@ NodeJS.
 
 [Netease API](https://binaryify.github.io/NeteaseCloudMusicApi/#/)
 
+Upcoming Goal Oct 20- 23: 
+- Integrate user loggin from netease for easier playlist migration 
+- Develop basic frontend with VueJS
+- Clean up code and files 
+- ALternatives with different artist name 
+
+Week 23 - 28:
+- Integrate database. 
+- Research possible server and web hosting platforms. 
+
+
 Goals:
 - Successfully migrate all tracks, with unfound tracks notified to end user
 - Wrote own Spotify API wrapper. 

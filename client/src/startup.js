@@ -19,7 +19,6 @@ if (!code) {
     console.log(access_token);
     const profile = await fetchProfile(access_token);
     populateUI(profile);
-    //add_create_playlist_button(access_token, profile.id);
     add_netease_playlist_button();
     add_search_track_button(access_token);
     add_migrate_button(access_token, profile.id);
@@ -103,12 +102,11 @@ function add_search_track_button(access_token) {
     createPlaylistButton.innerText = "Search ";
     createPlaylistButton.addEventListener("click", async () => {
         const trackName = inputBox.value;
-        const artist_list = ['Lil Baby', 'Gunna']
         if (trackName === "") {
             alert("Song name cannot be empty.");
             return;
         }
-        const song = await searchTrack(trackName, access_token, artist_list);
+        const song = await searchTrack(trackName, access_token);
         console.log(song)
     });
 
@@ -117,7 +115,6 @@ function add_search_track_button(access_token) {
     document.body.appendChild(container);
 }
 function add_migrate_button(access_token, userID) {
-    console.log(`access one layer ${access_token}`)
     const container = document.createElement("div");
 
     const inputContainer = document.createElement("div");

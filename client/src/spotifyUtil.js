@@ -1,8 +1,15 @@
 /**
- * Wrapper for working with spotify web api
+ * Wrapper functions for working with spotify web api
  */
 
-
+/**
+ * 
+ * @param {string} endpoint 
+ * @param {string} request_method 
+ * @param {string} access_token 
+ * @param {*} body 
+ * @returns 
+ */
 
 export async function fetchWebApi(endpoint, request_method, access_token, body) {
     const res = await fetch(`https://api.spotify.com/${endpoint}`, {
@@ -48,9 +55,13 @@ export async function getKeys(fileName, key) {
  * Get the access token from spotify API providing developer client keys. 
  * @param {string} client_id 
  * @param {string} client_secret 
- * @returns {string} access_token. Edit return to return full JSON object 
+ * @returns {string} access_token. Edit return to return full JSON object.
+ * Note that this function utilizes the "client secret" code from Spotify
+ * It will not work for other users, whose information can only be accessed with
+ * access token gained from authentication. (Use getAccessToken from oauth.js)
+ * 
  */
-async function getAccessToken(client_id, client_secret) {
+async function getAccessToken_secret(client_id, client_secret) {
     const url = 'https://accounts.spotify.com/api/token';
     const data = new URLSearchParams();
     data.append('grant_type', 'client_credentials');
@@ -83,11 +94,14 @@ async function getAccessToken(client_id, client_secret) {
  *  ]
  */
 
-export async function searchTrack(trackName, access_token, artist_list, limit = 3) {
+export async function searchTrack(track_name, access_token, artist_list = [], limit = 3) {
     console.log(artist_list);
-    const artists = artist_list.join(", ");
-    const name = trackName;
-    const url = `https://api.spotify.com/v1/search?q=track:${name}%20artist:${artists}&type=track&limit=${limit}`;
+    let url;
+    if (artist_list.length != 0)
+        url = `https://api.spotify.com/v1/search?q=track:${track_name}%20artist:${artist_list.join(", ")}&type=track&limit=${limit}`;
+    else
+        url = `https://api.spotify.com/v1/search?q=${track_name}&type=track`;
+
     console.log(url);
     console.log(`access token: ${access_token}`)
 
@@ -180,7 +194,7 @@ export async function createPlaylist
  * @param {map} trackDetail track provided with full detail. {name: "", artist: [] }
  * @returns track id of the matched spotify track
  */
-async function matching(trackDetail) {
+async function optimizedMatching(trackDetail) {
 
 }
 
@@ -189,11 +203,11 @@ async function matching(trackDetail) {
  * @param {*} trackList In spotify track id
  * @param {*} playlist_id In spotify track id
  */
-export async function insertTracks(trackList, playlist_id, access_token) {
+export async function insertTracks(track_list, playlist_id, access_token) {
     // uris=spotify:track:trackid
     // uris is the parameter needed to add to a playlist
     // Seperate each uris with a comma to add a list of tracks
-    const trackURIs = trackList.map(track => `spotify:track:${track}`);
+    const trackURIs = track_list.map(track => `spotify:track:${track}`);
     await fetchWebApi(
         `v1/playlists/${playlist_id}/tracks?uris=${trackURIs.join(',')}`,
         'POST',
@@ -202,7 +216,7 @@ export async function insertTracks(trackList, playlist_id, access_token) {
 }
 
 
-async function main() {
+async function test() {
     console.log("Getting Cliend ID");
     const client_id = await getKeys('keys.json', 'client_id');
     console.log(client_id);
