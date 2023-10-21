@@ -13,11 +13,12 @@ const params = new URLSearchParams(window.location.search); // Current url query
 const code = params.get("code");
 
 if (!code) {
-    redirectToAuthCodeFlow(clientId);
+    add_log_in_button(clientId);
 } else {
     const access_token = await getAccessToken(clientId, code);
     console.log(access_token);
     const profile = await fetchProfile(access_token);
+    document.getElementById("profile").style.display = "block";
     populateUI(profile);
     add_netease_playlist_button();
     add_search_track_button(access_token);
@@ -151,3 +152,18 @@ function add_migrate_button(access_token, userID) {
     container.appendChild(createPlaylistButton);
     document.body.appendChild(container);
 }
+
+function add_log_in_button(clientId) {
+    const container = document.createElement("div");
+    const inputContainer = document.createElement("div");
+
+    const creatLoginButton = document.createElement("button");
+    creatLoginButton.innerText = "Log in";
+    creatLoginButton.addEventListener("click", async () => {
+        redirectToAuthCodeFlow(clientId)
+    })
+    container.appendChild(inputContainer);
+    container.appendChild(creatLoginButton);
+    document.body.appendChild(container);
+}
+
