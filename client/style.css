@@ -1,23 +1,18 @@
 /* Set default font family and size */
 body {
   font-family: Arial, sans-serif;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 /* Set background color */
 body {
-  background-color: #f0f0f0;
+  background-color: #222;
+  color: #fff;
 }
 
-/* Center content horizontally */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-/* Add padding to container */
-.container {
-  padding: 20px;
+/* Apply margin to top-level div elements */
+body>div {
+  margin-bottom: 10px;
 }
 
 /* Style buttons */
@@ -28,15 +23,26 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #0069d9;
 }
 
+/* Style text input */
+input {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+}
+
 /* Style links */
 a {
   color: #007bff;
+  /* Link color */
   text-decoration: none;
 }
 
