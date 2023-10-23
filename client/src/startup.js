@@ -1,10 +1,12 @@
-
 import {
     redirectToAuthCodeFlow, getAccessToken,
     generateCodeVerifier, generateCodeChallenge
 } from './oauth.js';
 
-import { createPlaylist, searchTrack, fetchWebApi, find_all_matching_spotify_tracks, insertTracks } from './spotifyUtil.js';
+import {
+    createPlaylist, searchTrack, fetchWebApi,
+    find_all_matching_spotify_tracks, insertTracks
+} from './spotifyUtil.js';
 
 import { fetchPlaylistTracks } from './fetchNetease.js';
 
@@ -13,8 +15,11 @@ const params = new URLSearchParams(window.location.search); // Current url query
 const code = params.get("code");
 
 if (!code) {
-    add_log_in_button(clientId);
+    //add_log_in_button(clientId);
+    add_log_in_listener(clientId);
 } else {
+    
+    document.querySelector("main").innerHTML = "";
     const access_token = await getAccessToken(clientId, code);
     console.log(access_token);
     const profile = await fetchProfile(access_token);
@@ -61,8 +66,8 @@ function populateUI(profile) {
 
 
 function add_netease_playlist_button() {
+    
     const container = document.createElement("div");
-
     const inputContainer = document.createElement("div");
     const inputLabel = document.createElement("label");
     inputLabel.innerText = "Netease PlaylistID: ";
@@ -115,6 +120,7 @@ function add_search_track_button(access_token) {
     container.appendChild(createPlaylistButton);
     document.body.appendChild(container);
 }
+
 function add_migrate_button(access_token, userID) {
     const container = document.createElement("div");
 
@@ -153,6 +159,13 @@ function add_migrate_button(access_token, userID) {
     document.body.appendChild(container);
 }
 
+function add_log_in_listener(clientId) {
+    const link = document.getElementById("log-in-button");
+    link.addEventListener("click", async () => {
+        redirectToAuthCodeFlow(clientId)
+    });
+  }
+
 function add_log_in_button(clientId) {
     const container = document.createElement("div");
     const inputContainer = document.createElement("div");
@@ -166,4 +179,3 @@ function add_log_in_button(clientId) {
     container.appendChild(creatLoginButton);
     document.body.appendChild(container);
 }
-

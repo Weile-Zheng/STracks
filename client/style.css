@@ -1,4 +1,9 @@
+.navContainer {
+  background-color:  #007bff;;
+}
+
 /* Set default font family and size */
+
 body {
   font-family: Arial, sans-serif;
   font-size: 17px;
@@ -42,7 +47,6 @@ input {
 /* Style links */
 a {
   color: #007bff;
-  /* Link color */
   text-decoration: none;
 }
 

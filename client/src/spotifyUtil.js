@@ -8,7 +8,7 @@
  * @param {string} request_method 
  * @param {string} access_token 
  * @param {*} body 
- * @returns 
+ * @returns web request in json. 
  */
 
 export async function fetchWebApi(endpoint, request_method, access_token, body) {
@@ -82,8 +82,9 @@ async function getAccessToken_secret(client_id, client_secret) {
 
 
 /**
- * Search for a track on spotify. 
- * @param {string} trackname
+ * Search for a track on spotify. Only returns tracks with full match on track name
+ * and artist name. For a more robust search, use optimizedMatching
+ * @param {string} track_name
  * @param {string} access_token 
  * @param {list} artist_list
  * @param {number} limit number of relevent result to be returned from search query. 
@@ -93,7 +94,6 @@ async function getAccessToken_secret(client_id, client_secret) {
  *  {name: '', artists: [''], id: '' } 
  *  ]
  */
-
 export async function searchTrack(track_name, access_token, artist_list = [], limit = 3) {
     console.log(artist_list);
     let url;
@@ -124,6 +124,7 @@ export async function searchTrack(track_name, access_token, artist_list = [], li
         return [];
     }
 }
+
 /**
  * Find matching spotifyID track for each
  * @param {*} track_list list of dict(track name and artists lists),
@@ -153,6 +154,7 @@ export async function find_all_matching_spotify_tracks(track_list, access_token)
 
     return spotify_list;
 }
+
 /**
  * Create a playlist for a user
  * @param {string} name 
@@ -178,15 +180,12 @@ export async function createPlaylist
         }`
 
     })
-
-
     return playlist.json();
 }
 
 /**
  * Matching a netease track to spotify track
- * Process
- *  - 1. match tracks with same name and artists
+ *  - 1. match tracks with same name and artists if provided(Call searchTrack)
  *  - 2. match tracks with same name and incomplete artists(ex: only one of two artist)
  *  - 3. match tracks with same name and different artist. first result returned
  *  - 4. match tracks with different name. first result returned
@@ -232,5 +231,4 @@ async function test() {
     console.log("Creating Playlist")
     const create = await createPlaylist("Test", access_token, "31udsopvquncrlokyfc3jp2yx5kq")
     console.log(create)
-
 }
