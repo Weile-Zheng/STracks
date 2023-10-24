@@ -82,12 +82,14 @@ async function getAccessToken_secret(client_id, client_secret) {
 
 
 /**
+ * DEPRECIATED
  * Search for a track on spotify. Only returns tracks with full match on track name
  * and artist name. For a more robust search, use optimizedMatching
  * @param {string} track_name
  * @param {string} access_token 
  * @param {list} artist_list
  * @param {number} limit number of relevent result to be returned from search query. 
+ * @param {string} url
  * @returns {object} List of track names returned from search with artist(s)
  * [ 
  *  {name: '', artists: ['', '' ], id: '' }, 
@@ -126,6 +128,55 @@ export async function searchTrack(track_name, access_token, artist_list = [], li
 }
 
 /**
+ * Matching a netease track to spotify track
+ *  - 1. match tracks with same name and artists if provided(Call searchTrack)
+ *  - 2. match tracks with same name and incomplete artists(ex: only one of two artist)
+ *  - 3. match tracks with same name and different artist. first result returned
+ * 
+ * @param {map} trackDetail track provided with full detail. {name: "", artist: [] }
+ * @returns track id of the matched spotify track
+ */
+export async function optimizedMatching(track_name, access_token, artist_list = [], url) {
+    const limit =3; 
+    const matching_queries = []; 
+    // Level 1 matching
+    const match1 = `v1/search?q=track:${track_name}%20artist:${artist_list.join(", ")}&type=track&limit=${limit}`;
+    matching_queries.push(match1); 
+    
+    // Level 2 matching
+    for(const artist of artist_list){
+        matching_queries.push(`v1/search?q=track:${track_name}%20artist:${artist}&type=track&limit=${limit}` )
+    }
+
+    // Level 3 matching
+    const match3 = `v1/search?q=${track_name}&type=track&limit=${limit}`; 
+    matching_queries.push(match3)
+
+    for (const query of matching_queries) {
+        console.log(query);
+        try {
+          const data = await fetchWebApi(
+            query,
+            'GET',
+            access_token
+          );
+          console.log(data);
+          if (data.tracks.items.length > 0) {
+            return data.tracks.items.map(item => ({
+              name: item.name,
+              artists: item.artists.map(artist => artist.name),
+              id: item.id
+            }));
+          }
+        } catch (error) {
+          console.error(`Error fetching data: ${error}`);
+          continue;
+        }
+      }
+      return []; // If no matching after all queries.
+}
+
+/**
  * Find matching spotifyID track for each
  * @param {*} track_list list of dict(track name and artists lists),
  * @param {*} access_token 
@@ -137,23 +188,24 @@ export async function find_all_matching_spotify_tracks(track_list, access_token)
     // and return its spotify id to add into spotify list.
     for (const track of track_list) {
 
-        const song = await searchTrack(track.name, access_token, track.artists);
+        const song = await optimizedMatching(track.name, access_token, track.artists);
         console.log(song);
         console.log(song.length)
         if (song.length > 0) {
             const firstTrack = song[0];
-            console.log(firstTrack);
+            console.log(`Found matching track: ${track.name} by artists: ${track.artists.join(",")}`);
             spotify_list.push(firstTrack.id);
             console.log(firstTrack.id);
         }
         else {
-            console.log(`Cannot find matching track: ${track.name} by artists: ${track.artists.join(",")}`);
+            console.log(`Cannot find matching track: ${track.name}`);
         }
 
     }
 
     return spotify_list;
 }
+
 
 /**
  * Create a playlist for a user
@@ -181,20 +233,6 @@ export async function createPlaylist
 
     })
     return playlist.json();
-}
-
-/**
- * Matching a netease track to spotify track
- *  - 1. match tracks with same name and artists if provided(Call searchTrack)
- *  - 2. match tracks with same name and incomplete artists(ex: only one of two artist)
- *  - 3. match tracks with same name and different artist. first result returned
- *  - 4. match tracks with different name. first result returned
- * 
- * @param {map} trackDetail track provided with full detail. {name: "", artist: [] }
- * @returns track id of the matched spotify track
- */
-async function optimizedMatching(trackDetail) {
-
 }
 
 /**

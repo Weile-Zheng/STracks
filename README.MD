@@ -1,43 +1,49 @@
 # Migrating Netease Tracks to Spotify
 
-Connecting Netease Music API with Spotify API to migrate Netease tracks to Spotify using 
-NodeJS. 
+Connecting Netease Music API with Spotify API to migrate Netease tracks to Spotify using
+NodeJS.
+
+![frontpage](./github/img1.png)
 
 [Spotify API](https://developer.spotify.com/documentation/web-api/)
 
 [Netease API](https://binaryify.github.io/NeteaseCloudMusicApi/#/)
 
+APIs for different platforms <- Request Manager -> Front End, Spotify API
+
 Local Set up method:
 Mount Neatease Nodejs server: node app.js (neteaseapi folder)
-Mount live server locally using vite: npm run dev (src folder of client) 
+Mount live server locally using vite: npm run dev (src folder of client)
 
-Upcoming Goal Oct 20- 23: 
-- Integrate user loggin from netease for easier playlist migration 
-- Develop basic frontend with VueJS
-- Clean up code and files 
-- ALternatives with different artist name 
+Upcoming Goal Oct 20- 23:
+
+-   Integrate user loggin from netease for easier playlist migration
+-   Develop basic frontend with VueJS
+-   Clean up code and files
+-   ALternatives with different artist name
 
 Week 23 - 28:
-- Integrate database. 
-- Research possible server and web hosting platforms. 
 
-Ideas: 
-How to improve matching? For songs that artist are registered with slightly different name? 
-slightly different song name? etc 
-Use word matching api? 
+-   Integrate database.
+-   Research possible server and web hosting platforms.
 
+Ideas:
+How to improve matching? For songs that artist are registered with slightly different name?
+slightly different song name? etc
+Use word matching api?
 
 Goals:
-- Successfully migrate all tracks, with unfound tracks notified to end user
-- UI Interface for user login and track management. 
-- Ability to deselect certain tracks to migrate 
-- Inclusion of native netease music interface instead of relying on playlist link/id
+
+-   Successfully migrate all tracks, with unfound tracks notified to end user
+-   UI Interface for user login and track management.
+-   Ability to deselect certain tracks to migrate
+-   Inclusion of native netease music interface instead of relying on playlist link/id
 
 Questions:
-- How to host a website
-- Package management and project framework
-- How to manage user data and track network trafficks. 
 
+-   How to host a website
+-   Package management and project framework
+-   How to manage user data and track network trafficks.
 
 Notes:
 Code in spotify-netease are clientside codes
@@ -49,8 +55,7 @@ Ideally rewrite fetchNetease.js to REST API to be robust and professional
 
 A web hostng service is needed for spotify-netease code. Which processes frontend request
 A frontend framework would be idea. Reactjs, vuejs
-Vite is used for development of these frontend codes as it is a fast local development server 
-
+Vite is used for development of these frontend codes as it is a fast local development server
 
 Client-Side Code:
 Languages: The primary language used for client-side code is JavaScript. HTML and CSS are also essential for creating the structure and styling of web pages.

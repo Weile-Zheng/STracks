@@ -44,10 +44,13 @@ div {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 5px;
   }
 
-.cover-container {
-    max-width: 42em;
+/* Background */
+.cover-container:first-child {
+    background-image: url('https://images7.alphacoders.com/133/1333817.jpeg');
+    background-size: cover;
 }
 
 
@@ -113,4 +116,13 @@ div {
  */
 .mastfoot {
     color: rgba(255, 255, 255, .5);
+}
+
+a {
+    color: #89b7e9;
+    text-decoration: none;
+  }
+  
+a:hover {
+    text-decoration: underline;
 }
