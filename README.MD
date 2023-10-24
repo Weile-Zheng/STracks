@@ -20,14 +20,16 @@ Upcoming Goal Oct 20- 23:
 -   Integrate user loggin from netease for easier playlist migration
 -   Develop basic frontend with VueJS
 -   Clean up code and files
--   ALternatives with different artist name
+
+Features:
+useroutput
 
 Week 23 - 28:
 
 -   Integrate database.
 -   Research possible server and web hosting platforms.
 
-Ideas:
+Ideas: (COmpleted)
 How to improve matching? For songs that artist are registered with slightly different name?
 slightly different song name? etc
 Use word matching api?
@@ -44,6 +46,7 @@ Questions:
 -   How to host a website
 -   Package management and project framework
 -   How to manage user data and track network trafficks.
+-   How to unit test in js, what are some frameworks.
 
 Notes:
 Code in spotify-netease are clientside codes
