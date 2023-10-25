@@ -7,7 +7,10 @@ app.get("/", (req, res) =>{
     res.sendStatus(500);
 })
 
+
+
 const userRouter = require("./routes/users");
 app.use("/users", userRouter);
+
 app.listen(4000); 
 
