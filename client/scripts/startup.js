@@ -19,8 +19,9 @@ if (!code) {
     add_log_in_listener(clientId);
 } else {
     const access_token = await getAccessToken(clientId, code);
-    console.log(access_token);
+    console.log(`access token: ${access_token}`);
     const profile = await fetchProfile(access_token);
+    console.log("profile fetched");
     document.getElementById("title-cover-container").remove();
     populateUI(profile);
     document.getElementById("profile").style.display="block";
