@@ -1,0 +1,27 @@
+### REST API REQUEST TESTING 
+### REQUIRES EXTENSION REST CLIENT
+
+# Testing get all Entries
+GET http://localhost:4000/signups
+
+
+### Testing adding a signup entry
+POST http://localhost:4000/signups
+Content-Type: application/json
+
+{
+    "name": "Weile", 
+    "email": "weilez@umich.edu", 
+    "spotifyID": "xxxxxx"
+}
+
+###
+### Testing adding a signup entry
+POST http://localhost:4000/signups
+Content-Type: application/json
+
+{
+    "name": "Peter", 
+    "email": "pnie@email.com", 
+    "spotifyID": "yyyyyy"
+}
