@@ -1,0 +1,28 @@
+html {
+    background-color: rgb(1, 19, 1);
+    
+}
+body {
+    background-image: url("https://images7.alphacoders.com/133/1333817.jpeg");
+    background-size: cover;
+    background-position: center;
+}
+
+#root {
+    height: 100vh;
+}
+
+#title-cover-container{
+    padding-top:100px;
+}
+
+p{
+    color:white
+}
+#heading {
+    text-align:center; 
+    padding-top: 50px;
+}
+#heading h3{
+   color:white
+}
