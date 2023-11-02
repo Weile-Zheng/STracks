@@ -1,4 +1,21 @@
+import { redirectToAuthCodeFlow } from "../scripts/oauth.js";
+import Signup from "./Signup";
+
+/**************************************************
+ * Login component.
+ *
+ * This component displays a login button and handles the login process.
+ * When the button is clicked, it calls the `redirectToAuthCodeFlow` function
+ * with a specific client ID.
+ **************************************************/
+
 const Login = () => {
+	const handleClick = () => {
+		console.log("Logging in");
+		const clientId = "4c9d395af6dd467ab054393b3b189898";
+		redirectToAuthCodeFlow(clientId);
+	};
+
 	return (
 		<div
 			id="title-cover-container"
@@ -22,9 +39,11 @@ const Login = () => {
 						className="btn btn-lg btn-light"
 						id="log-in-button"
 						style={{ fontWeight: "bold" }}
+						onClick={handleClick}
 					>
 						Log in
 					</button>
+					<Signup />
 				</p>
 			</main>
 		</div>

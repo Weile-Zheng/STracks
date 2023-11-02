@@ -2,6 +2,7 @@ html {
     background-color: rgb(1, 19, 1);
     
 }
+
 body {
     background-image: url("https://images7.alphacoders.com/133/1333817.jpeg");
     background-size: cover;
@@ -25,4 +26,9 @@ p{
 }
 #heading h3{
    color:white
+}
+
+#Signup {
+     color: white; 
+     background-color:rgb(43, 42, 42);
 }

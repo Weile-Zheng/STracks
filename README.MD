@@ -15,11 +15,12 @@ Local Set up method:
 Mount Neatease Nodejs server: node app.js (neteaseapi folder)
 Mount live server locally using vite: npm run dev (src folder of client)
 
-Upcoming Goal Oct 20- 23:
+Upcoming Goal Nov:
 
--   Integrate user loggin from netease for easier playlist migration
--   Develop basic frontend with VueJS
--   Clean up code and files
+-  Complete React Integration
+-  Refactor existing codes to Typescript
+-  Implement React router and call backend API with signup form submissions
+
 
 Features:
 useroutput
