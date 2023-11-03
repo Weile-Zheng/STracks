@@ -17,20 +17,11 @@ Mount live server locally using vite: npm run dev (src folder of client)
 
 Upcoming Goal Nov:
 
--  Complete React Integration
--  Refactor existing codes to Typescript
--  Implement React router and call backend API with signup form submissions
+-   Complete React Integration
+-   Refactor existing codes to Typescript
+-   Implement React router and call backend API with signup form submissions
 
-
-Features:
-useroutput
-
-Week 23 - 28:
-
--   Integrate database.
--   Research possible server and web hosting platforms.
-
-Ideas: (COmpleted)
+Ideas: (Completed)
 How to improve matching? For songs that artist are registered with slightly different name?
 slightly different song name? etc
 Use word matching api?
