@@ -1,13 +1,10 @@
 html {
-     /*Necessary for Chrome*/
     background-color: rgb(1, 19, 1);
-
-    
 }
 
+
 body {
-    /*Necessary for Safari*/
-    background: linear-gradient(rgba(1, 19, 1, 0.5), rgba(1, 19, 1, 0.5)), url("https://images7.alphacoders.com/133/1333817.jpeg");
+    background:url("https://images7.alphacoders.com/133/1333817.jpeg");
     background-size: cover;
     background-position: center;
 }
