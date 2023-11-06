@@ -32,3 +32,15 @@ p{
      color: white; 
      background-color:rgb(43, 42, 42);
 }
+
+#SignupPage{
+    width: 50%;
+    height: fit-content;
+  }
+
+#title-cover-container {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

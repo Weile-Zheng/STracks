@@ -1,6 +1,5 @@
 import { redirectToAuthCodeFlow } from "../scripts/oauth.js";
-import Signup from "./Signup";
-
+import { Link } from "react-router-dom";
 /**************************************************
  * Login component.
  *
@@ -20,12 +19,6 @@ const Login = () => {
 		<div
 			id="title-cover-container"
 			className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column align-items-center justify-content-center text-white"
-			style={{
-				position: "absolute",
-				top: "55%",
-				left: "50%",
-				transform: "translate(-50%, -50%)",
-			}}
 		>
 			<main role="main" className="inner cover text-center">
 				<h1 className="cover-heading">Import your Playlist</h1>
@@ -43,7 +36,15 @@ const Login = () => {
 					>
 						Log in
 					</button>
-					<Signup />
+
+					<Link
+						to="/signup" // replace with your signup page URL
+						className="btn btn-lg btn-light"
+						id="Signup"
+						style={{ fontWeight: "bold" }}
+					>
+						Signup
+					</Link>
 				</p>
 			</main>
 		</div>
