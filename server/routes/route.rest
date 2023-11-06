@@ -25,3 +25,7 @@ Content-Type: application/json
     "email": "pnie@email.com", 
     "spotifyID": "yyyyyy"
 }
+
+### Testing test route
+GET http://localhost:4000/test
+Content-Type: application/json

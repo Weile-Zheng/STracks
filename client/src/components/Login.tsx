@@ -1,7 +1,8 @@
 import { redirectToAuthCodeFlow } from "../scripts/oauth.js";
 import { Link } from "react-router-dom";
+
 /**************************************************
- * Login component.
+ * Login PAGE component.
  *
  * This component displays a login button and handles the login process.
  * When the button is clicked, it calls the `redirectToAuthCodeFlow` function

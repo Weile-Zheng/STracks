@@ -10,7 +10,6 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path="/" element={<Login />} />{" "}
-					{/* Use Login or another component here */}
 					<Route path="/signup" element={<Signup />} />
 				</Routes>
 			</Router>
