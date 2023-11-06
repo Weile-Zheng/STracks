@@ -20,6 +20,11 @@ app.get("/", (req, res) =>{
     res.sendStatus(200);
 })
 
+app.get('/test', (req, res) => {
+    res.status(200).send('Test route');
+});
+
+
 
 // Setting up url routes for users
 const signupRouter = require("./routes/signups");
