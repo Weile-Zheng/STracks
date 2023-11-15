@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import AuthContext from "./Authcontext";
 
 /**************************************************
  * Home PAGE component.
@@ -7,13 +8,9 @@ import { useEffect } from "react";
  * User profile page after successfully authenticate with spotify
  * Return user to login page if unsuccessful.
  **************************************************/
-
-interface HomeProps {
-	isAuthenticated: boolean;
-}
-
-const Home = ({ isAuthenticated }: HomeProps) => {
+const Home = () => {
 	const navigate = useNavigate();
+	const { isAuthenticated, code } = useContext(AuthContext);
 
 	useEffect(() => {
 		if (!isAuthenticated) {
@@ -25,6 +22,7 @@ const Home = ({ isAuthenticated }: HomeProps) => {
 	if (!isAuthenticated) return null;
 
 	console.log("Authentication Success");
+	console.log(code);
 	return <div>Welcome to the page</div>;
 };
 

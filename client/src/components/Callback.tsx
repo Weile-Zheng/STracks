@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import AuthContext from "./Authcontext"; // Add this line
 
 /**************************************************
  * Callback FUNCTIONAL component.
@@ -22,12 +23,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 const Callback = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-
+	const { setAuthenticated, setCode } = useContext(AuthContext);
 	useEffect(() => {
 		const params = new URLSearchParams(location.search);
+		const code = params.get("code");
 		if (params.get("error") === "access_denied") navigate("/");
-		else if (params.get("code")) {
+		else if (code) {
 			console.log(params);
+			setAuthenticated(true);
+			setCode(code);
 			navigate("/Home");
 		}
 	}, [location.search, navigate]);
