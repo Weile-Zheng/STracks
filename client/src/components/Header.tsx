@@ -1,3 +1,11 @@
+/**************************************************
+ * Header FEATURE component.
+ *
+ * This component displays a header that is meant to be on top of the web
+ * page at all times. Treat it as a logo. It should be included in al;
+ * PAGE component
+ **************************************************/
+
 const Header = () => {
 	return (
 		<div className="inner" id="heading">
