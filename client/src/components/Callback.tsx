@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import AuthContext from "./Authcontext"; // Add this line
-
+import AuthContext from "./Authcontext";
+import { getAccessToken } from "../scripts/oauth.js";
 /**************************************************
  * Callback FUNCTIONAL component.
  *
@@ -20,21 +20,36 @@ import AuthContext from "./Authcontext"; // Add this line
  *
  * It execute after the component mounts, not as soon as it was rendered.
  */
-const Callback = () => {
+
+interface Props {
+	clientID: string;
+}
+const Callback = ({ clientID }: Props) => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { setAuthenticated, setCode } = useContext(AuthContext);
+	const { setAuthenticated, setCode, setToken } = useContext(AuthContext);
+
 	useEffect(() => {
 		const params = new URLSearchParams(location.search);
 		const code = params.get("code");
-		if (params.get("error") === "access_denied") navigate("/");
-		else if (code) {
-			console.log(params);
+
+		if (params.get("error") === "access_denied") {
+			navigate("/");
+		} else if (code) {
 			setAuthenticated(true);
 			setCode(code);
-			navigate("/Home");
+			console.log(code);
+			const fetchToken = async () => {
+				const token = await getAccessToken(clientID, code);
+				if (!token) navigate("/");
+				setToken(token);
+				console.log(`Token: ${token}`);
+				navigate("/Home");
+			};
+			fetchToken();
 		}
-	}, [location.search, navigate]);
+	}, []); // Only run once
+
 	return null;
 };
 

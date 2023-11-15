@@ -9,11 +9,13 @@ import { Link } from "react-router-dom";
  * with a specific client ID.
  **************************************************/
 
-const Login = () => {
+interface Prop {
+	clientID: string;
+}
+const Login = ({ clientID }: Prop) => {
 	const handleClick = () => {
 		console.log("Logging in");
-		const clientId = "4c9d395af6dd467ab054393b3b189898";
-		redirectToAuthCodeFlow(clientId);
+		redirectToAuthCodeFlow(clientID);
 	};
 
 	return (

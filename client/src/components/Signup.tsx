@@ -9,9 +9,9 @@ const Signup = () => {
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		fetch("http://localhost:4000/test")
-			.then((response) => response.text()) // convert the response to text
-			.then((data) => console.log(data)) // log the response data
-			.catch((error) => console.error("Error:", error)); // log any errors
+			.then((response) => response.text()) 
+			.then((data) => console.log(data)) 
+			.catch((error) => console.error("Error:", error)); 
 	};
 
 	const formFields = [
