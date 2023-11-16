@@ -2,12 +2,17 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "./Authcontext";
 import { fetchProfile } from "../scripts/spotifyUtil.js";
+import { ClientIDProp } from "./Props";
+
 /**************************************************
  * Home PAGE component.
  *
  * User profile page after successfully authenticate with spotify
  * Return user to login page if unsuccessful.
+ *
+ * PROPS: This component use the ClientIDProp
  **************************************************/
+
 interface Profile {
 	display_name: string;
 	images: { url: string }[];
@@ -18,15 +23,11 @@ interface Profile {
 	href: string;
 }
 
-interface Prop {
-	clientID: string;
-}
-
-const Home = ({ clientID }: Prop) => {
+const Home = ({ clientID }: ClientIDProp) => {
 	const { isAuthenticated, code, accessToken } = useContext(AuthContext);
 	const [profile, setProfile] = useState<Profile>();
 
-	//Security Check. Implement it in app for better result 
+	//Security Check. Implement it in app for better result
 	const navigate = useNavigate();
 	if (!isAuthenticated) navigate("/");
 
@@ -40,7 +41,17 @@ const Home = ({ clientID }: Prop) => {
 		profileWrapper();
 	}, [accessToken]); // Only re-run the effect if accessToken changes
 
-	if (!profile) return <div>Loading</div>;
+	if (!profile) {
+		return (
+			<div
+				className="d-flex justify-content-center align-items-center"
+				style={{ height: "100vh" }}
+			>
+				<div className="spinner-border text-light" role="status"></div>
+			</div>
+		);
+	}
+
 	console.log("Profile Fetched");
 	return (
 		<div id="userProfile">

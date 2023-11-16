@@ -2,10 +2,14 @@ import { useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AuthContext from "./Authcontext";
 import { getAccessToken } from "../scripts/oauth.js";
+import { ClientIDProp } from "./Props";
+
 /**************************************************
  * Callback FUNCTIONAL component.
  *
  * Reroute access_denied error back to the login page(root) of the website.
+ * 
+ * PROPS: This component use the ClientIDProp
  **************************************************/
 
 /**
@@ -21,10 +25,7 @@ import { getAccessToken } from "../scripts/oauth.js";
  * It execute after the component mounts, not as soon as it was rendered.
  */
 
-interface Props {
-	clientID: string;
-}
-const Callback = ({ clientID }: Props) => {
+const Callback = ({ clientID }: ClientIDProp) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { setAuthenticated, setCode, setToken } = useContext(AuthContext);

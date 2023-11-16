@@ -1,5 +1,7 @@
 import { redirectToAuthCodeFlow } from "../scripts/oauth.js";
 import { Link } from "react-router-dom";
+import { ClientIDProp } from "./Props";
+import { useState } from "react";
 
 /**************************************************
  * Login PAGE component.
@@ -7,12 +9,13 @@ import { Link } from "react-router-dom";
  * This component displays a login button and handles the login process.
  * When the button is clicked, it calls the `redirectToAuthCodeFlow` function
  * with a specific client ID.
+ *
+ * PROPS: This component use the ClientIDProp
  **************************************************/
 
-interface Prop {
-	clientID: string;
-}
-const Login = ({ clientID }: Prop) => {
+const Login = ({ clientID }: ClientIDProp) => {
+	const [showPopup, setShowPopup] = useState(false);
+
 	const handleClick = () => {
 		console.log("Logging in");
 		redirectToAuthCodeFlow(clientID);
