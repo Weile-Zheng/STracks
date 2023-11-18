@@ -1,5 +1,5 @@
 /**
- * Wrapper functions for working with spotify web api
+ * Wrapper functions for working with spotify web api.
  */
 
 /**

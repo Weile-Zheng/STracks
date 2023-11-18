@@ -1,3 +1,9 @@
+/*********
+ * Wrapper functions for fetching and parsing netease music tracks using the 
+ * NETEASEMUSIC nodejs api
+ * 
+ */
+
 
 /**
  * Fetches all tracks from a netease playlist. Requesting url. 

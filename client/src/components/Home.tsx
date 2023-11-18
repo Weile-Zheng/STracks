@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-import AuthContext from "./Authcontext";
+import { AuthContext } from "./AuthContext";
 import { fetchProfile } from "../scripts/spotifyUtil.js";
-import { ClientIDProp } from "./Props";
 
 /**************************************************
  * Home PAGE component.
@@ -23,7 +22,7 @@ interface Profile {
 	href: string;
 }
 
-const Home = ({ clientID }: ClientIDProp) => {
+const Home = () => {
 	const { isAuthenticated, code, accessToken } = useContext(AuthContext);
 	const [profile, setProfile] = useState<Profile>();
 
