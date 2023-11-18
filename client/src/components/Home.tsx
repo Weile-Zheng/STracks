@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
 import { fetchProfile } from "../scripts/spotifyUtil.js";
-
+import Export from "./Export";
 /**************************************************
  * Home PAGE component.
  *
@@ -53,17 +53,20 @@ const Home = () => {
 
 	console.log("Profile Fetched");
 	return (
-		<div id="userProfile">
-			<h1>{profile.display_name}</h1>
+		<>
+			<div id="userProfile">
+				<h1>{profile.display_name}</h1>
 
-			<img src={profile.images[0].url} alt="Profile" width="200" height="200" />
-			<p>{profile.images[0].url}</p>
+				<img src={profile.images[0].url} alt="Profile" width="200" height="200" />
+				<p>{profile.images[0].url}</p>
 
-			<p>{profile.id}</p>
-			<p>{profile.email}</p>
-			<a href={profile.external_urls.spotify}>{profile.uri}</a>
-			<a href={profile.href}>{profile.href}</a>
-		</div>
+				<p>{profile.id}</p>
+				<p>{profile.email}</p>
+				<a href={profile.external_urls.spotify}>{profile.uri}</a>
+				<a href={profile.href}>{profile.href}</a>
+				<Export />
+			</div>
+		</>
 	);
 };
 export default Home;

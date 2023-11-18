@@ -1,17 +1,23 @@
 import React from "react";
-import { useState } from "react";
 
 /**************************************************************************
  * ClientContext OBJECT
  * AuthContext OBJECT
  * AuthProvider FUNCTIONAL Component
  *
- * State managing for user authentication.
+ * State managing for clientID and user authentication.
  *
- * Track for:
- * authentication status [Bool]
- * return code 	[String]
- * access token  [String]
+ * ClientContext -> ClientID
+ * 		Does Not Change.
+ *
+ * AuthContext -> user authentication
+ * 		Changes dynamically required code and access tokens returned from spotify.
+ * 		Managed with AuthProvider for allowing dynamic change.
+ *
+ * 		Track for:
+ * 		authentication status [Bool]
+ * 		return code 	[String]
+ * 		access token  [String]
  *
  * USED for acquiring information from spotify api
  * SHARED between Callback, Home, and other spotify api interacting components
@@ -29,23 +35,3 @@ export const AuthContext = React.createContext({
 	setCode: (_: string) => {},
 	setAccessToken: (_: string) => {},
 });
-
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [isAuthenticated, setAuthenticated] = useState(false);
-	const [code, setCode] = useState("");
-	const [accessToken, setAccessToken] = useState("");
-	return (
-		<AuthContext.Provider
-			value={{
-				isAuthenticated,
-				setAuthenticated,
-				code,
-				setCode,
-				accessToken,
-				setAccessToken,
-			}}
-		>
-			{children}
-		</AuthContext.Provider>
-	);
-};
