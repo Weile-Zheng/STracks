@@ -31,9 +31,16 @@ interface Props {
 }
 
 function Export({ userID, accessToken }: Props) {
-	/************************************************************
-	 *
-	 ************************************************************/
+	/***************************************************************************************
+	 * open: Tracks the state for collapse object. (If Start Export is clicked open)
+   * 
+   * -----------To-be-provided by user in Start Export Form --------------
+   * neteasePlaylistID: Tracks the ID for netease playlist to-be-exported
+   * newPlaylistName: Tracks the playlist name for the newly created spotify playlist
+   * isPublicPlaylist: Tracks the publicity for the newly created spotify playlist
+   * playlistDescription: Tracks the playlist description.
+   * matchingLevel: The matching level for searching spotify track same/similar to netease
+	 **************************************************************************************/
 	const [open, setOpen] = useState(false);
 	const [neteasePlaylistID, setNeteasePlaylistId] = useState("");
 	const [newPlaylistName, setNewPlaylistName] = useState("");
@@ -43,14 +50,19 @@ function Export({ userID, accessToken }: Props) {
 	);
 	const [matchingLevel, setMatchingLevel] = useState("");
 
+  // -------------------------------
+  // Core of the program. Migrate the playlist from netease to spotify after Start Export 
+  // Form is submitted.
+  // For detailed function description, see spotifyUtil and fetchNetease in scripts
+  // -------------------------------
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const playlist = await createPlaylist(
 			newPlaylistName,
 			accessToken,
 			userID,
-			isPublicPlaylist,
-			setPlaylistDescription
+			playlistDescription,
+			isPublicPlaylist
 		);
 		console.log("Fetching tracks from netease playlist");
 		const trackList = await fetchPlaylistTracks(neteasePlaylistID);
@@ -59,7 +71,8 @@ function Export({ userID, accessToken }: Props) {
 		console.log("Finding all matching spotified tracks");
 		const spotify_list = await find_all_matching_spotify_tracks(
 			trackList,
-			accessToken
+			accessToken,
+			matchingLevel
 		);
 		console.log("Spotify track list found");
 		console.log(spotify_list);
@@ -68,6 +81,19 @@ function Export({ userID, accessToken }: Props) {
 		console.log("Playlist migrated successfully.");
 	};
 
+  /****************************************************
+   * react-bootstrap css. 
+   * Input boxes: 
+   *    neteasePlaylistID: REQUIRED
+   *    newPlaylistName:  REQUIRED
+   *    playlistDescription: OPTIONAL
+   * 
+   * Multiple Choice:
+   *    matchingLevel: REQUIRED
+   * 
+   * Check boxes:
+   *    isPublicPlaylist: OPTIONAL (default private)
+   *****************************************************/
 	return (
 		<div
 			style={{
@@ -188,6 +214,7 @@ function Export({ userID, accessToken }: Props) {
 						as="textarea"
 						rows={3}
 						placeholder="Netease Imported Playlist"
+						onChange={(e) => setPlaylistDescription(e.target.value)}
 					/>
 				</Form.Group>
 			</div>
