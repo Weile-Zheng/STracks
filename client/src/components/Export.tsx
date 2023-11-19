@@ -33,13 +33,13 @@ interface Props {
 function Export({ userID, accessToken }: Props) {
 	/***************************************************************************************
 	 * open: Tracks the state for collapse object. (If Start Export is clicked open)
-   * 
-   * -----------To-be-provided by user in Start Export Form --------------
-   * neteasePlaylistID: Tracks the ID for netease playlist to-be-exported
-   * newPlaylistName: Tracks the playlist name for the newly created spotify playlist
-   * isPublicPlaylist: Tracks the publicity for the newly created spotify playlist
-   * playlistDescription: Tracks the playlist description.
-   * matchingLevel: The matching level for searching spotify track same/similar to netease
+	 *
+	 * -----------To-be-provided by user in Start Export Form --------------
+	 * neteasePlaylistID: Tracks the ID for netease playlist to-be-exported
+	 * newPlaylistName: Tracks the playlist name for the newly created spotify playlist
+	 * isPublicPlaylist: Tracks the publicity for the newly created spotify playlist
+	 * playlistDescription: Tracks the playlist description.
+	 * matchingLevel: The matching level for searching spotify track same/similar to netease
 	 **************************************************************************************/
 	const [open, setOpen] = useState(false);
 	const [neteasePlaylistID, setNeteasePlaylistId] = useState("");
@@ -50,11 +50,11 @@ function Export({ userID, accessToken }: Props) {
 	);
 	const [matchingLevel, setMatchingLevel] = useState("");
 
-  // -------------------------------
-  // Core of the program. Migrate the playlist from netease to spotify after Start Export 
-  // Form is submitted.
-  // For detailed function description, see spotifyUtil and fetchNetease in scripts
-  // -------------------------------
+	// -------------------------------
+	// Core of the program. Migrate the playlist from netease to spotify after Start Export
+	// Form is submitted.
+	// For detailed function description, see spotifyUtil and fetchNetease in scripts
+	// -------------------------------
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const playlist = await createPlaylist(
@@ -78,22 +78,22 @@ function Export({ userID, accessToken }: Props) {
 		console.log(spotify_list);
 		console.log("Inserting all tracks");
 		await insertTracks(spotify_list, playlist.id, accessToken);
-		console.log("Playlist migrated successfully.");
+		console.log(`Playlist migrated successfully. Matching Level: ${matchingLevel}`);
 	};
 
-  /****************************************************
-   * react-bootstrap css. 
-   * Input boxes: 
-   *    neteasePlaylistID: REQUIRED
-   *    newPlaylistName:  REQUIRED
-   *    playlistDescription: OPTIONAL
-   * 
-   * Multiple Choice:
-   *    matchingLevel: REQUIRED
-   * 
-   * Check boxes:
-   *    isPublicPlaylist: OPTIONAL (default private)
-   *****************************************************/
+	/****************************************************
+	 * react-bootstrap css.
+	 * Input boxes:
+	 *    neteasePlaylistID: REQUIRED
+	 *    newPlaylistName:  REQUIRED
+	 *    playlistDescription: OPTIONAL
+	 *
+	 * Multiple Choice:
+	 *    matchingLevel: REQUIRED
+	 *
+	 * Check boxes:
+	 *    isPublicPlaylist: OPTIONAL (default private)
+	 *****************************************************/
 	return (
 		<div
 			style={{

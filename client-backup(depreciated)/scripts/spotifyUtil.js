@@ -136,8 +136,8 @@ export async function searchTrack(track_name, access_token, artist_list = [], li
  * @param {map} trackDetail track provided with full detail. {name: "", artist: [] }
  * @returns track id of the matched spotify track
  */
-export async function optimizedMatching(track_name, access_token, artist_list = [], level=3) {
-    const limit =3; 
+export async function optimizedMatching(track_name, access_token, artist_list = [], level) {
+    const limit =1; 
     const matching_queries = []; 
 
     // Level 1 matching
@@ -195,9 +195,9 @@ export async function find_all_matching_spotify_tracks(track_list, access_token,
 
         const song = await optimizedMatching(track.name, access_token, track.artists, level);
         console.log(song);
-        console.log(song.length)
+        //console.log(song.length)
         if (song.length > 0) {
-            const firstTrack = song[0];
+            const firstTrack = song;
             console.log(`Found matching track: ${track.name} by artists: ${track.artists.join(",")}`);
             spotify_list.push(firstTrack.id);
             console.log(firstTrack.id);
