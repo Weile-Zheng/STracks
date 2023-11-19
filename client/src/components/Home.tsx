@@ -6,10 +6,10 @@ import Export from "./Export";
 
 /**************************************************
  * Home PAGE component.
- * 
- * Parent: App.tsx 
+ *
+ * Parent: App.tsx
  * Context Modify: None
- * 
+ *
  * User profile page after successfully authenticate with spotify
  * Return user to login page if unsuccessful.
  **************************************************/
@@ -58,9 +58,14 @@ const Home = () => {
 		<>
 			<div id="userProfile">
 				<h1>{profile.display_name}</h1>
-
-				<img src={profile.images[0].url} alt="Profile" width="200" height="200" />
-
+				{profile.images[0] && (
+					<img
+						src={profile.images[0].url}
+						alt="Profile"
+						width="200"
+						height="200"
+					/>
+				)}
 				<p>{profile.id}</p>
 				<p>{profile.email}</p>
 				<a href={profile.external_urls.spotify}>{"Go to my Spotify"}</a>

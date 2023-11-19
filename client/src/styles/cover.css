@@ -23,7 +23,7 @@ p{
 #heading {
     text-align:center; 
     padding-top: 50px;
-    margin-bottom: 15px;
+    margin-bottom: 40px;
 }
 #heading h3{
    color:white
@@ -61,9 +61,12 @@ p{
     opacity: 0;
     transform: translateX(100px); /* move to the right when collapsed */
   }
-  
+ 
+  /*
+  Targeting element with both collapse-css-transition and open className. 
+  */
   .collapse-css-transition.open {
     max-height: 1000px; /* adjust this value based on your content size */
     opacity: 1;
-    transform: translateX(0); /* move back to the original position when open */
+    transform: translateX(-30px); /* move back to the original position when open */
   }

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Card, Form, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { useState, useRef } from "react";
+import { Card, Form, Button, OverlayTrigger, Tooltip, Toast } from "react-bootstrap";
 import {
 	createPlaylist,
 	find_all_matching_spotify_tracks,
@@ -33,6 +33,13 @@ interface Props {
 function Export({ userID, accessToken }: Props) {
 	/***************************************************************************************
 	 * open: Tracks the state for collapse object. (If Start Export is clicked open)
+	 * formKey: set key to rerender the form after submission. Clearing all fields.
+	 * showToast: Toast popup message for the progress and result of playlist exportation
+	 * toastMessage: Live, console-like display of the export process.
+   * toastConsole: Persistant string variable for what toastMessage should be displaying.
+   * 
+   * *The naming for toastMessage and toastConsole is kind of odd, they should be switched 
+   * around, name refactoring in the future is needed.
 	 *
 	 * -----------To-be-provided by user in Start Export Form --------------
 	 * neteasePlaylistID: Tracks the ID for netease playlist to-be-exported
@@ -40,16 +47,24 @@ function Export({ userID, accessToken }: Props) {
 	 * isPublicPlaylist: Tracks the publicity for the newly created spotify playlist
 	 * playlistDescription: Tracks the playlist description.
 	 * matchingLevel: The matching level for searching spotify track same/similar to netease
+	 *
 	 **************************************************************************************/
 	const [open, setOpen] = useState(false);
+	const [formKey, setFormKey] = useState(0);
+	const [showToast, setShowToast] = useState(false);
+	const [toastMessage, setToastMessage] = useState("");
+	const toastConsole = useRef("");
+
+	const updateToastConsole = (newMessage: string) => {
+		toastConsole.current = toastConsole.current + newMessage + "\n";
+		setToastMessage(toastConsole.current);
+	};
+
 	const [neteasePlaylistID, setNeteasePlaylistId] = useState("");
 	const [newPlaylistName, setNewPlaylistName] = useState("");
 	const [isPublicPlaylist, setIsPublicPlaylist] = useState(false);
-	const [playlistDescription, setPlaylistDescription] = useState(
-		"Netease Imported Playlist"
-	);
+	const [playlistDescription, setPlaylistDescription] = useState("");
 	const [matchingLevel, setMatchingLevel] = useState("");
-
 	// -------------------------------
 	// Core of the program. Migrate the playlist from netease to spotify after Start Export
 	// Form is submitted.
@@ -57,18 +72,24 @@ function Export({ userID, accessToken }: Props) {
 	// -------------------------------
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const playlist = await createPlaylist(
-			newPlaylistName,
-			accessToken,
-			userID,
-			playlistDescription,
-			isPublicPlaylist
-		);
+		setShowToast(true);
+
+		// Resetting Form Values for field clearing.
+		setNeteasePlaylistId("");
+		setNewPlaylistName("");
+		setIsPublicPlaylist(false);
+		setPlaylistDescription("");
+		setMatchingLevel("");
+		setFormKey(formKey + 1);
+
 		console.log("Fetching tracks from netease playlist");
+		updateToastConsole(toastMessage + "Fetching tracks from netease playlist\n");
 		const trackList = await fetchPlaylistTracks(neteasePlaylistID);
 		console.log(trackList);
 		console.log("Track list from netease formed. ");
 		console.log("Finding all matching spotified tracks");
+		updateToastConsole(toastMessage + "Track list from netease formed.\n");
+		updateToastConsole(toastMessage + "Finding all matching spotified tracks.\n");
 		const spotify_list = await find_all_matching_spotify_tracks(
 			trackList,
 			accessToken,
@@ -76,9 +97,23 @@ function Export({ userID, accessToken }: Props) {
 		);
 		console.log("Spotify track list found");
 		console.log(spotify_list);
+		updateToastConsole(toastMessage + spotify_list + "\n");
 		console.log("Inserting all tracks");
+		updateToastConsole(toastMessage + "Inserting all tracks\n");
+		const playlist = await createPlaylist(
+			newPlaylistName,
+			accessToken,
+			userID,
+			playlistDescription,
+			isPublicPlaylist
+		);
 		await insertTracks(spotify_list, playlist.id, accessToken);
 		console.log(`Playlist migrated successfully. Matching Level: ${matchingLevel}`);
+		updateToastConsole(
+			toastMessage +
+				`Playlist migrated successfully. Matching Level: ${matchingLevel}`
+		);
+    setToastMessage("");
 	};
 
 	/****************************************************
@@ -99,6 +134,7 @@ function Export({ userID, accessToken }: Props) {
 			style={{
 				display: "flex",
 				width: "100%",
+				margin: "10px",
 			}}
 		>
 			<Card
@@ -126,7 +162,7 @@ function Export({ userID, accessToken }: Props) {
 				style={{ display: "flex", justifyContent: "space-between" }}
 				className={`collapse-css-transition ${open ? "open" : ""}`}
 			>
-				<Form onSubmit={handleSubmit}>
+				<Form key={formKey} onSubmit={handleSubmit}>
 					<Form.Group>
 						<Form.Label>Netease Playlist ID</Form.Label>
 						<Form.Control
@@ -170,7 +206,12 @@ function Export({ userID, accessToken }: Props) {
 								&#x2754;
 							</Button>
 						</OverlayTrigger>
-						<div style={{ display: "flex", justifyContent: "space-between" }}>
+						<div
+							style={{
+								display: "flex",
+								justifyContent: "space-between",
+							}}
+						>
 							<Form.Check
 								type="radio"
 								label="Level 1"
@@ -213,11 +254,31 @@ function Export({ userID, accessToken }: Props) {
 					<Form.Control
 						as="textarea"
 						rows={3}
+						value={playlistDescription}
 						placeholder="Netease Imported Playlist"
 						onChange={(e) => setPlaylistDescription(e.target.value)}
 					/>
 				</Form.Group>
 			</div>
+			<Toast
+				onClose={() => setShowToast(false)}
+				show={showToast}
+				bg="dark"
+				style={{
+					position: "absolute",
+					bottom: 0,
+					right: 0,
+					height: "500px",
+					width: "300px",
+					margin: "10px",
+					overflow: "auto",
+				}}
+			>
+				<Toast.Header closeButton={true} className="bg-dark text-light">
+					<strong className="mr-auto">Status</strong>
+				</Toast.Header>
+				<Toast.Body className="bg-dark text-light">{toastMessage}</Toast.Body>
+			</Toast>
 		</div>
 	);
 }
