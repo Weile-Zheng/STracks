@@ -23,6 +23,7 @@ p{
 #heading {
     text-align:center; 
     padding-top: 50px;
+    margin-bottom: 15px;
 }
 #heading h3{
    color:white
@@ -52,4 +53,17 @@ p{
     align-items: center;
     color: white;
     height: 75vh;
+  }
+
+  .collapse-css-transition {
+    transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+    max-height: 0;
+    opacity: 0;
+    transform: translateX(100px); /* move to the right when collapsed */
+  }
+  
+  .collapse-css-transition.open {
+    max-height: 1000px; /* adjust this value based on your content size */
+    opacity: 1;
+    transform: translateX(0); /* move back to the original position when open */
   }

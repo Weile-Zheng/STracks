@@ -3,13 +3,15 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
 import { fetchProfile } from "../scripts/spotifyUtil.js";
 import Export from "./Export";
+
 /**************************************************
  * Home PAGE component.
- *
+ * 
+ * Parent: App.tsx 
+ * Context Modify: None
+ * 
  * User profile page after successfully authenticate with spotify
  * Return user to login page if unsuccessful.
- *
- * PROPS: This component use the ClientIDProp
  **************************************************/
 
 interface Profile {
@@ -58,13 +60,11 @@ const Home = () => {
 				<h1>{profile.display_name}</h1>
 
 				<img src={profile.images[0].url} alt="Profile" width="200" height="200" />
-				<p>{profile.images[0].url}</p>
 
 				<p>{profile.id}</p>
 				<p>{profile.email}</p>
-				<a href={profile.external_urls.spotify}>{profile.uri}</a>
-				<a href={profile.href}>{profile.href}</a>
-				<Export />
+				<a href={profile.external_urls.spotify}>{"Go to my Spotify"}</a>
+				<Export userID={profile.id} accessToken={accessToken} />
 			</div>
 		</>
 	);

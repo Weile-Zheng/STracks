@@ -135,11 +135,18 @@ function add_migrate_button(access_token, userID) {
             alert("Playlist name cannot be empty.");
             return;
         }
-        const playlistName = await getPlaylistName(access_token, playlistID);
-        const trackList = await searchTracks(access_token, playlistName);
-        const playlist = await createPlaylist(access_token, userID, playlistName);
-        await addTracksToPlaylist(access_token, playlist.id, trackList);
-        console.log("Playlist migrated successfully.");
+        const playlist = await createPlaylist("exported playlist", access_token, userID);
+        console.log("Forming tracklists")
+        const trackList = await fetchPlaylistTracks(playlistID);
+        console.log(trackList)
+        console.log("Track list from netease formed. ");
+        console.log("Finding all matching spotified tracks");
+        const spotify_list = await find_all_matching_spotify_tracks(trackList, access_token);
+        console.log("Spotify track list found");
+        console.log(spotify_list);
+        console.log("Inserting all tracks");
+        await insertTracks(spotify_list, playlist.id, access_token);
+        console.log("Complete");
     });
 
     inputContainer.appendChild(migrateButton);

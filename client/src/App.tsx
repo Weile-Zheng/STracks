@@ -14,7 +14,7 @@ function App() {
 	const [accessToken, setAccessToken] = useState("");
 	return (
 		<>
-			<Header />
+			<Header isAuthenticated={isAuthenticated} />
 			<AuthContext.Provider
 				value={{
 					isAuthenticated,

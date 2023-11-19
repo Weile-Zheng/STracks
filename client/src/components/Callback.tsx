@@ -5,10 +5,13 @@ import { getAccessToken } from "../scripts/oauth.js";
 
 /**************************************************
  * Callback FUNCTIONAL component.
- *
+ * This component is used for rerouting only for legacy code purposes. Future 
+ * rewriting is expected. 
+ * 
+ * PARENT: app.tsx
+ * Context Modify: AuthContext -> isAuthenticated, code, accessToken.
+ * 
  * Reroute access_denied error back to the login page(root) of the website.
- *
- * PROPS: This component use the ClientIDProp
  **************************************************/
 
 /**

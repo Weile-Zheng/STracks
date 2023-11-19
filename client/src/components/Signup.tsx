@@ -3,6 +3,9 @@ import { useState } from "react";
 /**************************************************
  * Signup PAGE component.
  *
+ * Parent: App.tsx
+ * Conext Modify: None
+ * 
  * This component displays a signup form with
  * cooresponding input boxes and titles.
  **************************************************/

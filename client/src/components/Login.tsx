@@ -5,17 +5,21 @@ import { ClientContext } from "./AuthContext.tsx";
 /**************************************************
  * Login PAGE component.
  *
+ * THIS IS THE HOMEPAGE OF THE WEBSITE
+ * DO NOT CONFUSE WITH COMPONENT <HOME> WHICH IS USER HOME AFTER LOGGING IN 
+ * 
+ * Parent: app.tsx
+ * Context Modify: None
+ * 
  * This component displays a login button and handles the login process.
  * When the button is clicked, it calls the `redirectToAuthCodeFlow` function
  * with a specific client ID.
- *
- * PROPS: This component use the ClientIDProp
  **************************************************/
 
 const Login = () => {
 	const [showPopup, setShowPopup] = useState(false);
 	const clientID = useContext(ClientContext);
-	
+
 	const handleClick = () => {
 		console.log("Logging in");
 		redirectToAuthCodeFlow(clientID);
