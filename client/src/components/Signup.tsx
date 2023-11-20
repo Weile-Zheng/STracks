@@ -5,7 +5,7 @@ import { useState } from "react";
  *
  * Parent: App.tsx
  * Conext Modify: None
- * 
+ *
  * This component displays a signup form with
  * cooresponding input boxes and titles.
  **************************************************/
@@ -35,7 +35,7 @@ const Signup = () => {
 	];
 
 	return (
-		<div className="container bg-dark text-white py-5" id="SignupPage">
+		<div className="container bg-dark text-white py-4" id="SignupPage">
 			<Link to="/" className="btn-close btn-close-white"></Link>
 			{isSubmit && <h3>Submission received</h3>}
 			{!isSubmit && (
@@ -44,7 +44,7 @@ const Signup = () => {
 					<p>
 						The application is currently in production. Spotify Developer
 						Platform Allows only a certain number of accounts to be authorized
-						and tested for SpotTrack, please sign up below
+						and tested for SpotTracks, please sign up below
 					</p>
 					<small>
 						*If your signup was already approved, you can continue to login

@@ -1,10 +1,6 @@
 import { useState, useRef } from "react";
 import { Card, Form, Button, OverlayTrigger, Tooltip, Toast } from "react-bootstrap";
-import {
-	createPlaylist,
-	find_all_matching_spotify_tracks,
-	insertTracks,
-} from "../scripts/spotifyUtil.js";
+import { createPlaylist, find_all_matching_spotify_tracks, insertTracks } from "../scripts/spotifyUtil.js";
 
 import { fetchPlaylistTracks } from "../scripts/fetchNetease.js";
 
@@ -36,10 +32,10 @@ function Export({ userID, accessToken }: Props) {
 	 * formKey: set key to rerender the form after submission. Clearing all fields.
 	 * showToast: Toast popup message for the progress and result of playlist exportation
 	 * toastMessage: Live, console-like display of the export process.
-   * toastConsole: Persistant string variable for what toastMessage should be displaying.
-   * 
-   * *The naming for toastMessage and toastConsole is kind of odd, they should be switched 
-   * around, name refactoring in the future is needed.
+	 * toastConsole: Persistant string variable for what toastMessage should be displaying.
+	 *
+	 * *The naming for toastMessage and toastConsole is kind of odd, they should be switched
+	 * around, name refactoring in the future is needed.
 	 *
 	 * -----------To-be-provided by user in Start Export Form --------------
 	 * neteasePlaylistID: Tracks the ID for netease playlist to-be-exported
@@ -56,7 +52,10 @@ function Export({ userID, accessToken }: Props) {
 	const toastConsole = useRef("");
 
 	const updateToastConsole = (newMessage: string) => {
-		toastConsole.current = toastConsole.current + newMessage + "\n";
+		// This logs to javascript console
+		console.log(newMessage);
+		// This log to the toast console
+		toastConsole.current = toastConsole.current + newMessage + "------------->";
 		setToastMessage(toastConsole.current);
 	};
 
@@ -73,6 +72,7 @@ function Export({ userID, accessToken }: Props) {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setShowToast(true);
+		toastConsole.current = ""; //Clear the console for every submission.
 
 		// Resetting Form Values for field clearing.
 		setNeteasePlaylistId("");
@@ -82,24 +82,17 @@ function Export({ userID, accessToken }: Props) {
 		setMatchingLevel("");
 		setFormKey(formKey + 1);
 
-		console.log("Fetching tracks from netease playlist");
-		updateToastConsole(toastMessage + "Fetching tracks from netease playlist\n");
+		updateToastConsole(`Fetching tracks from netease playlist. ID: ${neteasePlaylistID}`);
 		const trackList = await fetchPlaylistTracks(neteasePlaylistID);
-		console.log(trackList);
-		console.log("Track list from netease formed. ");
-		console.log("Finding all matching spotified tracks");
-		updateToastConsole(toastMessage + "Track list from netease formed.\n");
-		updateToastConsole(toastMessage + "Finding all matching spotified tracks.\n");
-		const spotify_list = await find_all_matching_spotify_tracks(
+		updateToastConsole("Track list from netease formed.");
+		updateToastConsole("Finding all matching spotified tracks.");
+		const [result, spotify_list] = await find_all_matching_spotify_tracks(
 			trackList,
 			accessToken,
 			matchingLevel
 		);
-		console.log("Spotify track list found");
-		console.log(spotify_list);
-		updateToastConsole(toastMessage + spotify_list + "\n");
-		console.log("Inserting all tracks");
-		updateToastConsole(toastMessage + "Inserting all tracks\n");
+		updateToastConsole("Spotify track list formed");
+		updateToastConsole("Inserting all tracks ");
 		const playlist = await createPlaylist(
 			newPlaylistName,
 			accessToken,
@@ -108,12 +101,9 @@ function Export({ userID, accessToken }: Props) {
 			isPublicPlaylist
 		);
 		await insertTracks(spotify_list, playlist.id, accessToken);
-		console.log(`Playlist migrated successfully. Matching Level: ${matchingLevel}`);
-		updateToastConsole(
-			toastMessage +
-				`Playlist migrated successfully. Matching Level: ${matchingLevel}`
-		);
-    setToastMessage("");
+		updateToastConsole(`Playlist migrated successfully. Matching Level: ${matchingLevel}`);
+		updateToastConsole(result);
+		updateToastConsole(`New Playlist Name: ${newPlaylistName}`);
 	};
 
 	/****************************************************
@@ -187,9 +177,8 @@ function Export({ userID, accessToken }: Props) {
 							placement="right"
 							overlay={
 								<Tooltip id="button-tooltip">
-									1 - match tracks with same name and artists if
-									provided. 2 - match tracks with same name and
-									incomplete artists(ex: only one of two artist). 3 -
+									1 - match tracks with same name and artists if provided. 2 - match tracks
+									with same name and incomplete artists(ex: only one of two artist). 3 -
 									match tracks with same name and different artist.
 								</Tooltip>
 							}

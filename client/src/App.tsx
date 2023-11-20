@@ -14,7 +14,6 @@ function App() {
 	const [accessToken, setAccessToken] = useState("");
 	return (
 		<>
-			<Header isAuthenticated={isAuthenticated} />
 			<AuthContext.Provider
 				value={{
 					isAuthenticated,
@@ -26,6 +25,7 @@ function App() {
 				}}
 			>
 				<Router>
+					<Header isAuthenticated={isAuthenticated} />
 					<Routes>
 						<Route path="/" element={<Login />} />
 						<Route path="/signup" element={<Signup />} />

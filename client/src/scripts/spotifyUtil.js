@@ -199,7 +199,9 @@ export async function optimizedMatching(track_name, access_token, artist_list = 
  * Find matching spotifyID track for each
  * @param {*} track_list list of dict(track name and artists lists),
  * @param {*} access_token 
- * @returns {list} list of spotify track ID that matched the find
+ * @returns {[string, list]}
+ * String for the number of tracks found out of total tracks provided
+ * List of spotify track ID that matched the find
  */
 export async function find_all_matching_spotify_tracks(track_list, access_token) {
     let spotify_list = [];
@@ -222,7 +224,7 @@ export async function find_all_matching_spotify_tracks(track_list, access_token)
 
     }
 
-    return spotify_list;
+    return [`${spotify_list.length}/${track_list.length} tracks found`,spotify_list];
 }
 
 
