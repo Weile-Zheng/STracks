@@ -44,10 +44,7 @@ const Home = () => {
 
 	if (!profile) {
 		return (
-			<div
-				className="d-flex justify-content-center align-items-center"
-				style={{ height: "100vh" }}
-			>
+			<div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
 				<div className="spinner-border text-light" role="status"></div>
 			</div>
 		);
@@ -59,16 +56,13 @@ const Home = () => {
 			<div id="userProfile">
 				<h1>{profile.display_name}</h1>
 				{profile.images[0] && (
-					<img
-						src={profile.images[0].url}
-						alt="Profile"
-						width="200"
-						height="200"
-					/>
+					<img src={profile.images[0].url} alt="Profile" width="200" height="200" />
 				)}
 				<p>{profile.id}</p>
 				<p>{profile.email}</p>
-				<a href={profile.external_urls.spotify}>{"Go to my Spotify"}</a>
+				<a href={profile.external_urls.spotify} style={{ color: "white" }}>
+					{"Go to my Spotify"}
+				</a>
 				<Export userID={profile.id} accessToken={accessToken} />
 			</div>
 		</>

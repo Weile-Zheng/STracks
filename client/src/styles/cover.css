@@ -9,6 +9,10 @@ body {
     background-position: center;
 }
 
+p{
+    color:white
+}
+
 #root {
     height: 100vh;
 }
@@ -17,9 +21,6 @@ body {
     padding-top:100px;
 }
 
-p{
-    color:white
-}
 #heading {
     text-align:center; 
     padding-top: 50px;

@@ -234,7 +234,7 @@ function Export({ userID, accessToken }: Props) {
 						value="public"
 						onChange={(e) => setIsPublicPlaylist(e.target.checked)}
 					/>
-					<Button variant="primary" type="submit">
+					<Button variant="dark" type="submit">
 						Submit
 					</Button>
 				</Form>
