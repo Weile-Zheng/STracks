@@ -43,4 +43,4 @@ Input relevant information and select matching level.
 Get the result
 
 ![result](github/result.png)
-![netease_result](github/netease_result.png)
+![netease_result](github/netease_result_spotify.png)
