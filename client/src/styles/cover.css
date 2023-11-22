@@ -4,7 +4,7 @@ html {
 
 
 body {
-    background:url("https://images7.alphacoders.com/133/1333817.jpeg");
+    background:url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgI-eyUbQjuIs2wjdizD86K3r3rNaozC_ZamhvRiztladgY4592AlL34Gb3yREEiunC8ve4gIT71R0WtjwtlA3HF4F38FgJJmkmQWZDRbxKKWYKKXL-uYCVA3FO8jKUiotnfsLRf3f43a1YW5yWIf8g2jZ8AIAkOeFJeGQMljhiHwGNif67RHVPoU01lQ/s1600/PASTEL-GRADIENT@4x.png");
     background-size: cover;
     background-position: center;
 }
@@ -56,6 +56,16 @@ p{
     height: 75vh;
   }
 
+  #profile-pic{
+    border-radius: 50%
+  }
+
+#export{
+
+        display: flex;
+        width: 100%;
+        margin: 10px;
+}
   .collapse-css-transition {
     transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
     max-height: 0;

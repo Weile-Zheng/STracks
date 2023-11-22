@@ -120,13 +120,7 @@ function Export({ userID, accessToken }: Props) {
 	 *    isPublicPlaylist: OPTIONAL (default private)
 	 *****************************************************/
 	return (
-		<div
-			style={{
-				display: "flex",
-				width: "100%",
-				margin: "10px",
-			}}
-		>
+		<div id="export">
 			<Card
 				className="mb-3"
 				style={{
@@ -137,8 +131,8 @@ function Export({ userID, accessToken }: Props) {
 					width: "20%",
 					height: "80%",
 					transition: "transform 0.3s ease-in-out",
-					marginLeft: open ? "20%" : "40%",
 					transform: open ? "translateX(-200px)" : "translateX(0)",
+					marginLeft: open ? "20%" : "40%",
 					justifyContent: "center",
 				}}
 				onClick={() => setOpen(!open)}

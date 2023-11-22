@@ -55,10 +55,17 @@ const Home = () => {
 		<>
 			<div id="userProfile">
 				<h1>{profile.display_name}</h1>
-				{profile.images[0] && (
-					<img src={profile.images[0].url} alt="Profile" width="200" height="200" />
+
+				{profile.images[1] && (
+					<img
+						id="profile-pic"
+						src={profile.images[1].url}
+						alt="Profile"
+						width="200"
+						height="200"
+					/>
 				)}
-				<p>{profile.id}</p>
+				<p>{`ID: ${profile.id}`}</p>
 				<p>{profile.email}</p>
 				<a href={profile.external_urls.spotify} style={{ color: "white" }}>
 					{"Go to my Spotify"}

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 /**************************************************
  * Header FEATURE component.
  *
@@ -7,15 +8,19 @@ import { Link } from "react-router-dom";
  * Context Modify: None
  *
  * This component displays a header that is meant to be on top of the web
- * page at all times. Treat it as a logo. It should be included in al;
- * PAGE component
+ * page at all times. Navigate to root page when clicked.
  **************************************************/
 
 const Header = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
+	const { setAuthenticated } = useContext(AuthContext);
+
+	const handleLogout = () => {
+		setAuthenticated(false);
+	};
 	return (
 		<div className="inner" id="heading">
 			<h3>
-				<Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+				<Link to="/" onClick={handleLogout} style={{ textDecoration: "none", color: "inherit" }}>
 					SpotTracks
 				</Link>
 			</h3>
