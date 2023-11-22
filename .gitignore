@@ -2,8 +2,6 @@ NeteaseCloudMusicApi/
 .DS_Store
 result.txt
 node_modules/
-package-lock.json
-package.json
 keys.json
 NeteaseAPI/
 note.txt
