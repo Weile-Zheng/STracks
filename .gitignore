@@ -1,11 +1,24 @@
-NeteaseCloudMusicApi/
+#__VSCODE__
 .DS_Store
+
+#__Generated__
 result.txt
 node_modules/
 keys.json
+
+#__Other NodeJS API
+
 NeteaseAPI/
+
+#__Notes 
 note.txt
 priv_notes.md
 test.js
 .env
+
+#__Backup__ 
 client-backup
+
+#__Deployment__
+.firebase
+.github

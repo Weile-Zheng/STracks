@@ -25,7 +25,7 @@ interface Profile {
 }
 
 const Home = () => {
-	const { isAuthenticated, code, accessToken } = useContext(AuthContext);
+	const { isAuthenticated, accessToken } = useContext(AuthContext);
 	const [profile, setProfile] = useState<Profile>();
 
 	//Security Check. Implement it in app for better result
