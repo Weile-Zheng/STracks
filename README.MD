@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="client/public/favicon.png" height="128">
-  <h2 align="center"><a href="spottrack-a13d0.web.app">SpotTracks</a></h2>
+  <img src="client/assets/favicon.png" height="128">
+  <h2 align="center"><a href="https://spottrack-a13d0.web.app/">SpotTracks</a></h2>
   <p align="center">Migrate external playlists to Spotify with one click<p>
   <p align="center">
     	<img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white" alt="aws" />
