@@ -21,4 +21,5 @@ client-backup
 
 #__Deployment__
 .firebase
+.firebaserc
 .github
