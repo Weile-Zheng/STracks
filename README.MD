@@ -3,7 +3,7 @@
   <h2 align="center"><a href="https://spottrack-a13d0.web.app/">SpotTracks</a></h2>
   <p align="center">Migrate external playlists to Spotify with one click<p>
   <p align="center">
-    	<img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white" alt="aws" />
+    	<img src="https://img.shields.io/badge/Firebase-FF9900?style=for-the-badge&logo=Firebase&logoColor=white" alt="firebase" />
     	<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="react"/>
     	<img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white" alt="express" />
         <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=whitee" alt="typescript" />

@@ -2,7 +2,6 @@ html {
     background-color: rgb(1, 19, 1);
 }
 
-
 body {
     background:url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgI-eyUbQjuIs2wjdizD86K3r3rNaozC_ZamhvRiztladgY4592AlL34Gb3yREEiunC8ve4gIT71R0WtjwtlA3HF4F38FgJJmkmQWZDRbxKKWYKKXL-uYCVA3FO8jKUiotnfsLRf3f43a1YW5yWIf8g2jZ8AIAkOeFJeGQMljhiHwGNif67RHVPoU01lQ/s1600/PASTEL-GRADIENT@4x.png");
     background-size: cover;
@@ -15,10 +14,7 @@ p{
 
 #root {
     height: 100vh;
-}
-
-#title-cover-container{
-    padding-top:100px;
+    
 }
 
 #heading {
@@ -30,6 +26,7 @@ p{
    color:white
 }
 
+
 #Signup {
      color: white; 
      background-color:rgb(43, 42, 42);
@@ -40,12 +37,13 @@ p{
     height: fit-content;
   }
 
-#title-cover-container {
-    position: absolute;
-    top: 55%;
+  #title-cover-container {
+    padding-top: 100px;
+    position: relative;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
+}
 
   #userProfile {
     display: flex;
