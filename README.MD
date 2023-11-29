@@ -15,6 +15,8 @@
 </p>
 
 Utilizing: [Spotify API](https://developer.spotify.com/documentation/web-api/) and [NeteaseMusic API](https://binaryify.github.io/NeteaseCloudMusicApi/#/)
+
+My deployed NeteaseMusic API [endpoint](https://netease-cloud-music-api-weile-zhengs-projects.vercel.app) via Vercel.
 ![](https://i.imgur.com/waxVImv.png)
 
 ![home](github/home.png)

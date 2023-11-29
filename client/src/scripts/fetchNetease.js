@@ -13,7 +13,7 @@
 export async function fetchPlaylistTracks(playlistID) {
 
   console.log("Sending Request")
-  const url = `http://localhost:3000/playlist/track/all?id=${playlistID}&realIP=116.25.146.177`
+  const url = `https://netease-cloud-music-api-pearl-seven.vercel.app/playlist/track/all?id=${playlistID}`
   const result = await fetch(url);
   const data = await result.json();
 

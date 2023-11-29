@@ -2,7 +2,6 @@ import { redirectToAuthCodeFlow } from "../scripts/oauth.js";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ClientContext } from "./AuthContext.tsx";
-import Tutorial from "./Tutorial.tsx";
 /**************************************************
  * Login PAGE component.
  *

@@ -3,7 +3,6 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
 import { fetchProfile } from "../scripts/spotifyUtil.js";
 import Export from "./Export";
-import Logout from "./Logout.js";
 
 /**************************************************
  * Home PAGE component.
