@@ -30,7 +30,7 @@ const Signup = () => {
 			id: "inputSpotifyId",
 			type: "text",
 			placeholder: "SpotifyID",
-			label: "SpotifyID",
+			label: "SpotifyID (optional)",
 		},
 	];
 
@@ -42,13 +42,13 @@ const Signup = () => {
 				<div>
 					<h1>Sign Up</h1>
 					<p>
-						The application is currently in production. Spotify Developer
-						Platform Allows only a certain number of accounts to be authorized
-						and tested for SpotTracks, please sign up below
+						The application is currently in production. Spotify Developer Platform Allows only a
+						certain number of accounts to be authorized and tested for SpotTracks, please sign up
+						below
 					</p>
 					<small>
-						*If your signup was already approved, you can continue to login
-						with Spotify authentication
+						*If your signup was already approved, you can continue to login with Spotify
+						authentication
 					</small>
 					<form onSubmit={handleSubmit}>
 						{formFields.map((field) => (
@@ -59,21 +59,14 @@ const Signup = () => {
 									className="form-control"
 									id={field.id}
 									placeholder={field.placeholder}
-									required
+									required={field.id !== "inputSpotifyID"}
 								/>
 							</div>
 						))}
 
 						<div className="form-group form-check mb-3">
-							<input
-								type="checkbox"
-								className="form-check-input"
-								id="updateCheck"
-							/>
-							<label
-								className="form-check-label mb-3"
-								htmlFor="updateCheck"
-							>
+							<input type="checkbox" className="form-check-input" id="updateCheck" />
+							<label className="form-check-label mb-3" htmlFor="updateCheck">
 								Notify me about updates
 							</label>
 						</div>

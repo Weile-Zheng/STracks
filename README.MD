@@ -1,6 +1,6 @@
 <p align="center">
   <img src="client/assets/favicon.png" height="128">
-  <h2 align="center"><a href="https://spottrack-a13d0.web.app/">SpotTracks</a></h2>
+  <h2 align="center"><a href="https://spottrack-a13d0.web.app/">STracks</a></h2>
   <p align="center">Migrate external playlists to Spotify with one click<p>
   <p align="center">
     	<img src="https://img.shields.io/badge/Firebase-FF9900?style=for-the-badge&logo=Firebase&logoColor=white" alt="firebase" />
@@ -21,6 +21,8 @@ My deployed NeteaseMusic API [endpoint](https://netease-cloud-music-api-weile-zh
 
 ![home](github/home.png)
 Currently supporting playlist exporting from Netease Music.
+
+\*Due to Spotify Developer Policy, SpotTracks has changed its name to STrack
 
 ![](https://i.imgur.com/waxVImv.png)
 

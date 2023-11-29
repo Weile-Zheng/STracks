@@ -21,7 +21,7 @@ const Header = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
 		<div className="inner" id="heading">
 			<h3>
 				<Link to="/" onClick={handleLogout} style={{ textDecoration: "none", color: "inherit" }}>
-					SpotTracks
+					STracks
 				</Link>
 			</h3>
 			<nav className="nav nav-masthead justify-content-center">
