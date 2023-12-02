@@ -3,6 +3,7 @@
  * DO NOT MOFIFY 
  */
 
+const callback = "https://stracks.web.app/callback";
 /**
  * Direct to Spotify authorization page with proper parameters 
  * @param {string} clientId 
@@ -16,7 +17,7 @@ export async function redirectToAuthCodeFlow(clientId) {
     const params = new URLSearchParams();
     params.append("client_id", clientId);
     params.append("response_type", "code");
-    params.append("redirect_uri", "https://spottrack-a13d0.web.app/callback");
+    params.append("redirect_uri", callback);
     params.append("scope", "user-read-private user-read-email playlist-modify-private playlist-modify-public playlist-read-private");
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
@@ -62,6 +63,7 @@ export async function generateCodeChallenge(codeVerifier) {
  * @returns access token string
  * Note that this is a different method than clientID and client secret. 
  */
+
 export async function getAccessToken(clientId, code) {
     const verifier = localStorage.getItem("verifier");
 
@@ -69,7 +71,7 @@ export async function getAccessToken(clientId, code) {
     params.append("client_id", clientId);
     params.append("grant_type", "authorization_code");
     params.append("code", code);
-    params.append("redirect_uri", "https://spottrack-a13d0.web.app/callback");
+    params.append("redirect_uri", callback);
     params.append("code_verifier", verifier);
 
     const result = await fetch("https://accounts.spotify.com/api/token", {

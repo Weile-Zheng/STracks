@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { addToSignupForm } from "../scripts/firebase.js";
 /**************************************************
  * Signup PAGE component.
  *
@@ -12,14 +13,17 @@ import { useState } from "react";
 
 const Signup = () => {
 	const [isSubmit, setIsSubmit] = useState(false);
+	const [formValues, setFormValues] = useState({});
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setFormValues({
+			...formValues,
+			[event.target.id]: event.target.value,
+		});
+	};
+
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		/*
-		fetch("http://localhost:4000/test")
-			.then((response) => response.text())
-			.then((data) => console.log(data))
-			.catch((error) => console.error("Error:", error));
-			*/
 		setIsSubmit(true);
 	};
 
@@ -44,11 +48,12 @@ const Signup = () => {
 					<p>
 						The application is currently in production. Spotify Developer Platform Allows only a
 						certain number of accounts to be authorized and tested for SpotTracks, please sign up
-						below
+						below.
 					</p>
 					<small>
 						*If your signup was already approved, you can continue to login with Spotify
-						authentication
+						authentication. An extension request is currently under process, once passed, users
+						can freely login to Spotify using sTrack.
 					</small>
 					<form onSubmit={handleSubmit}>
 						{formFields.map((field) => (
@@ -60,6 +65,7 @@ const Signup = () => {
 									id={field.id}
 									placeholder={field.placeholder}
 									required={field.id !== "inputSpotifyID"}
+									onChange={handleChange}
 								/>
 							</div>
 						))}
