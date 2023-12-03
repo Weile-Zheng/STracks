@@ -13,7 +13,7 @@ import { addToSignupForm } from "../scripts/firebase.js";
 
 const Signup = () => {
 	const [isSubmit, setIsSubmit] = useState(false);
-	const [formValues, setFormValues] = useState({});
+	const [formValues, setFormValues] = useState<{ [key: string]: string }>({});
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setFormValues({
@@ -24,6 +24,10 @@ const Signup = () => {
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		const name = formValues.inputName;
+		const email = formValues.inputEmail;
+		const spotifyId = formValues.inputSpotifyId || "";
+		addToSignupForm(name, email, spotifyId);
 		setIsSubmit(true);
 	};
 
@@ -64,7 +68,7 @@ const Signup = () => {
 									className="form-control"
 									id={field.id}
 									placeholder={field.placeholder}
-									required={field.id !== "inputSpotifyID"}
+									required={field.id !== "inputSpotifyId"}
 									onChange={handleChange}
 								/>
 							</div>

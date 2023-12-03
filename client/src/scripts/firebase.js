@@ -57,7 +57,7 @@ initializeAppCheck(firebaseApp, {
  * @param {string} spotifyID(optional)
  * Note that this is a different method than clientID and client secret. 
  */
-export async function addToSignupForm(name, email, spotifyID){
+export async function addToSignupForm(name, email, spotifyID=""){
     await addDoc(collection(db, "signups"), {
       Name: name,
       Email: email,
