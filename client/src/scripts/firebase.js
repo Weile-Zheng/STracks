@@ -2,7 +2,12 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
-
+/**
+ * App check is a wrapper that encapsulates a variety of protection solutions incuding 
+ * App check would prevent sites other than your own from accessing your firebase resources.
+ * Recaptcha helps to block bots or spammers from your own site.  
+ * 
+ */
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://support.google.com/firebase/answer/7015592
