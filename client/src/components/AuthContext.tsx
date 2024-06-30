@@ -7,7 +7,7 @@ import React from "react";
  *
  * State managing for clientID and user authentication.
  *
- * ClientContext -> ClientID
+ * ClientContext -> ClientID(NOT SENSITIVE)
  * 		Does Not Change.
  *
  * AuthContext -> user authentication
@@ -25,6 +25,7 @@ import React from "react";
  * WRAPPED around routes in App.tsx
  ***************************************************************************/
 
+// Not sensitive. Only need to secure "client secret" from spotify. 
 export const ClientContext = React.createContext("4c9d395af6dd467ab054393b3b189898");
 
 export const AuthContext = React.createContext({
