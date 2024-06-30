@@ -24,6 +24,8 @@ Currently supporting playlist exporting from Netease Music.
 
 \*Due to Spotify Developer Policy, SpotTracks has changed its name to STrack
 
+\*Currently requesting for Spotify API extension. Users must sign up and wait. After extension request approved, directly going to login will be supported.
+
 ![](https://i.imgur.com/waxVImv.png)
 
 ### Tutorial
