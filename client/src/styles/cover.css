@@ -1,83 +1,88 @@
 html {
-    background-color: rgb(1, 19, 1);
+	background-color: rgb(1, 19, 1);
 }
 
 body {
-    background:url("../../assets/homegradient.png");
-    background-size: cover;
-    background-position: center;
-    position: relative; 
-    z-index: 1;
+	background: url("../../assets/homegradient.png");
+	background-size: cover;
+	background-position: center;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-height: 105vh;
+	z-index: 1;
 }
 
-p{
-    color:white
+p {
+	color: white;
 }
 
 #root {
-    height: 100vh;
-    
+	height: 100vh;
 }
 
 #heading {
-    text-align:center; 
-    padding-top: 50px;
-    margin-bottom: 40px;
+	text-align: center;
+	padding-top: 50px;
+	margin-bottom: 40px;
 }
-#heading h3{
-   color:white
+#heading h3 {
+	color: white;
 }
-
 
 #Signup {
-     color: white; 
-     background-color:rgb(43, 42, 42);
+	color: white;
+	background-color: rgb(43, 42, 42);
 }
 
-#SignupPage{
-    width: 50%;
-    height: fit-content;
-  }
-
-  #title-cover-container {
-    padding-top: 100px;
-    position: relative;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+#SignupPage {
+	width: 50%;
+	height: fit-content;
 }
 
-  #userProfile {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    height: 75vh;
-  }
-
-  #profile-pic{
-    border-radius: 50%
-  }
-
-#export{
-
-        display: flex;
-        width: 100%;
-        margin: 10px;
+@media screen and (max-width: 768px) {
+	#SignupPage {
+		width: 80%;
+	}
 }
-  .collapse-css-transition {
-    transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-    max-height: 0;
-    opacity: 0;
-    transform: translateX(100px); /* move to the right when collapsed */
-  }
- 
-  /*
+#title-cover-container {
+	padding-top: 100px;
+	position: relative;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#userProfile {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	height: 75vh;
+}
+
+#profile-pic {
+	border-radius: 50%;
+}
+
+#export {
+	display: flex;
+	width: 100%;
+	margin: 10px;
+}
+.collapse-css-transition {
+	transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+	max-height: 0;
+	opacity: 0;
+	transform: translateX(100px); /* move to the right when collapsed */
+}
+
+/*
   Targeting element with both collapse-css-transition and open className. 
   */
-  .collapse-css-transition.open {
-    max-height: 1000px; /* adjust this value based on your content size */
-    opacity: 1;
-    transform: translateX(-30px); /* move back to the original position when open */
-  }
+.collapse-css-transition.open {
+	max-height: 1000px; /* adjust this value based on your content size */
+	opacity: 1;
+	transform: translateX(-30px); /* move back to the original position when open */
+}
